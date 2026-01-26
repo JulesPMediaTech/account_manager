@@ -4,8 +4,14 @@ services:
   accmanager_service:
     build: .
     ports:
-      - "8000:8000"
+      - "4080:8000"
     volumes:
       - ./app:/app
     environment:
       - FLASK_ENV=development
+    secrets:
+      - secret_key
+
+secrets:
+  secret_key:
+    file: .secrets/secret_key

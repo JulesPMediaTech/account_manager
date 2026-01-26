@@ -5,3 +5,4 @@ __pycache__/
 .cache.sqlite
 ssh-text-paste.txt
 .pytest*
+.secrets/
