@@ -1,0 +1,42 @@
+  <div class="data-form">
+    <h2>Add User</h2>
+    <form id="stringfield" method="POST">
+      {{ form.hidden_tag() }}
+      <div class="form-wrapper">
+        <div class="col-span-2">
+          {{ form.username.label }} <br>
+          {{ form.username(class="form-control", placeholder="Enter username") }} 
+          {% for error in form.username.errors %} <span class="err">[{{ error }}]</span> {% endfor %}
+          <!-- {{ form.username.data }}  -->
+          <!-- <br> -->
+        </div>
+        <div>
+        {{ form.firstName.label }} <br>
+        {{ form.firstName(class="form-control", placeholder="Enter First Name") }} <br>
+        {% for error in form.firstName.errors %} <span class="err">[{{ error|safe }}]</span> {% endfor %}
+        <!-- {{ form.firstName.data }}  -->
+        <!-- <br> -->
+        </div>
+        <div>
+        {{ form.lastName.label }} <br>
+        {{ form.lastName(class="form-control", placeholder="Enter Last Name") }} <br>
+        {% for error in form.lastName.errors %} <span class="err">[{{ error|safe }}]</span> {% endfor %}
+        <!-- {{ form.lastName.data }}  -->
+        <!-- <br> -->
+        </div>
+        <div>
+        {{ form.password.label }} <br>
+        {{ form.password(class="form-control", placeholder="Choose a password") }} <br>
+        {% for error in form.password.errors %} <span class="err">[{{ error }}]</span> {% endfor %}
+        <!-- <br> -->
+        </div>
+        <div>
+        {{ form.repeatPassword.label }} <br>
+        {{ form.repeatPassword(class="form-control", placeholder="Re-type the password") }} <br>
+        {% for error in form.repeatPassword.errors %} <span class="err">[{{ error }}]</span> {% endfor %}
+        <!-- <br> -->
+        </div>
+      </div>
+      {{ form.submit(class='submit-btn') }}<br>
+    </form>
+  </div>

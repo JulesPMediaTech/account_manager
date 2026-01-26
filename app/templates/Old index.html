@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block head %}
+    <title>Home Page</title>
+{% endblock %}
+
+{% block body %}
+<div class ="content">
+        <header class="page-header">
+            <script type="module" src="{{ url_for('static', filename='components/burger-menu.js') }}"></script>
+            <burger-menu>
+                <a href="/index">Home</a>
+                <a href="/profile">Profile</a>
+                <a href="/settings">Settings</a>
+                <a href="/logout">Logout</a>
+            </burger-menu>
+            <h1>Welcome to the Account Manager</h1>
+        </header>
+    <p>This is the home page.</p>
+        <!-- Import your web components -->
+    <script type="module" src="{{ url_for('static', filename='components/login-widget.js') }}"></script>
+    <login-widget></login-widget>
+
+    <script type="module" src="{{ url_for('static', filename='components/opaque-dialog.js') }}"></script>
+
+    <!-- Button to open the dialog -->
+    <button id="openModal">Open Modal</button>
+    <button id="openNonModal">Open Non-Modal</button>
+
+<!-- Dialog element with a form -->
+    <opaque-dialog id="myModal">
+      <form method="dialog">
+        <p>This is a modal popup with a transparent backdrop.</p>
+        <button type="submit">Close</button>
+      </form>
+    </opaque-dialog>
+
+    <script>
+      const dialog = document.getElementById("myModal");
+      const openModalButton = document.getElementById("openModal");
+      const openNonModalButton = document.getElementById("openNonModal");
+
+      // Open the modal
+      openModalButton.addEventListener("click", () => {
+        dialog.showModal();
+      });
+
+      // Open the non-modal version
+      openNonModalButton.addEventListener("click", () => {
+        dialog.show();
+      });
+    </script>
+
+
+</div>
+
+
+{% endblock %}
+
+

@@ -1,0 +1,76 @@
+/* From Uiverse.io by abdo_6865 */ 
+.radio-input {
+  box-shadow: 0 20px 5px rgba(0, 0, 0, 0.3);
+  border-radius: 20px;
+  /* border: 1px solid white; */
+}
+
+.radio-input input {
+  opacity: 0;
+  position: absolute;
+}
+
+.radio-input label {
+  padding: 15px 20px;
+  cursor: pointer;
+  background: linear-gradient(to bottom, white, grey);
+  transition: 0.3s;
+  font-weight: bold;
+  color: #1a1a1a;
+}
+
+.radio-input label:first-child:has(input:checked) {
+  box-shadow:
+    0 0 5px rgb(26, 123, 208) inset,
+    0 5px 15px rgba(0, 47, 255, 0.4),
+    0 0 15px rgba(1, 14, 89, 0.4) inset;
+  background: linear-gradient(150deg, #ffffff, #a3c4f3);
+  color: #1a7bd0;
+}
+
+.radio-input label:first-child:hover {
+  box-shadow:
+    0 0 8px rgba(26, 123, 208, 0.8) inset,
+    0 6px 18px rgba(0, 47, 255, 0.5),
+    0 0 20px rgba(1, 14, 89, 0.5) inset;
+}
+
+.radio-input label:last-child:has(input:checked) {
+  box-shadow:
+    0 0 5px #9b59b6 inset,
+    0 5px 15px rgba(155, 89, 182, 0.4),
+    0 0 15px rgba(105, 39, 105, 0.4) inset;
+  background: linear-gradient(150deg, #f4ecf7, #d291bc);
+  color: #8e44ad;
+}
+
+.radio-input label:last-child:hover {
+  box-shadow:
+    0 0 8px rgba(155, 89, 182, 0.8) inset,
+    0 6px 18px rgba(142, 68, 173, 0.5),
+    0 0 20px rgba(105, 39, 105, 0.5) inset;
+}
+
+.radio-input label:has(input:checked) {
+  box-shadow:
+    0 0 5px #2ecc71 inset,
+    0 5px 15px rgba(46, 204, 113, 0.4),
+    0 0 15px rgba(22, 128, 76, 0.4) inset;
+  background: linear-gradient(150deg, #eafaf1, #7bdc8d);
+  color: #1a934c;
+}
+
+.radio-input label:hover {
+  box-shadow:
+    0 0 8px rgba(46, 204, 113, 0.8) inset,
+    0 6px 18px rgba(39, 174, 96, 0.5),
+    0 0 20px rgba(22, 128, 76, 0.5) inset;
+}
+
+.radio-input label:first-child {
+  border-radius: 20px 0 0 20px;
+}
+
+.radio-input label:nth-child(4) {
+  border-radius: 0 20px 20px 0;
+}

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Account Manager</title>
+    <!-- <link rel="stylesheet" href="/static/css/main.css"> -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+   
+    <script type="module" src="{{ url_for('static', filename='components/burger-menu.js') }}"></script>
+    <script type="module" src="{{ url_for('static', filename='components/opaque-dialog.js') }}"></script>
+    <script type="module" src="{{ url_for('static', filename='components/login-widget.js') }}"></script>
+    <script type="module" src="{{ url_for('static', filename='components/accordion-menu.js') }}"></script>
+
+
+    {% block head %}{% endblock %}
+</head>
+<body>
+    {% block body %}{% endblock %}
+
+</body>     
+</html>

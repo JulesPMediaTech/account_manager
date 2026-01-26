@@ -1,0 +1,9 @@
+.venv
+__pycache__
+.vscode
+.git*
+*.md
+!README.md
+.env
+.cache.sqlite
+ssh-text-paste.txt

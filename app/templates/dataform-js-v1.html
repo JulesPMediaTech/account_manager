@@ -1,0 +1,36 @@
+<form id="add-acount" action="/submit" method="POST">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <h2>Add User</h2>
+
+  <div class="data-form">
+    <div class="form-wrapper">
+      <div class="n1">
+        <label for="first-name" class="needed">First Name:</label><br>
+        <input type="text" id="first-name" name="first-name" placeholder="Type your first name..." required>
+      </div>
+      <div class="n2">
+        <label for="last-name" class="needed">Last Name:</label><br>
+        <input type="text" id="last-name" name="last-name" placeholder="Type your last name..." required>
+      </div>
+      <div class="n3">
+        <label for="Email" class="needed">Email:</label><br>
+        <input type="email" id="email" name="email" placeholder="Type your email..." required>
+      </div>
+      <div class="n4">
+        <label for="user-id">User id</label><br>
+        <input type="text" id="user-id" name="user-id" placeholder="User id">
+      </div>
+      <div class="n5">
+        <label for="password" class="needed">Password:</label><br>
+        <input type="password" id="password" name="password" placeholder="Enter a password">
+      </div>
+      <div class="n6">
+        <label for="confirm-password" class="needed">Confirm Password:</label><br>
+        <input type="password" id="confirm-password" name="confirm-password" placeholder="Re-type password">
+      </div>
+    </div>
+    <div class="data-form-button">
+      <input type="submit" value="Submit">
+    </div>
+</form>
+</div>

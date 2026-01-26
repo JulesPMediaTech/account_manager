@@ -1,0 +1,63 @@
+
+dialog {
+  background-color: var(--menu-bg-color, #f1f1f1);
+  color: var(--text-color, #333);
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  max-width: 400px;
+    /* Add transition for smooth closing */
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+/* Animation for opening */
+dialog[open] {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Animation for closing */
+dialog.closing {
+  animation: fadeOut 0.3s ease-in forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+}
+
+/* Style the backdrop to be semi-transparent */
+dialog::backdrop {
+  /* Define the final state of the backdrop */
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  /* Start it off as completely invisible */
+  opacity: 0;
+
+  /* Tell the browser to animate the opacity property */
+  transition: opacity 0.3s ease-out;
+  transition: background-color 0.3s ease-out;
+  transition: backdrop-filter 0.3s ease-out;
+}
+
+/* When the dialog is open, fade the backdrop in */
+dialog[open]::backdrop {
+  opacity: 1;
+}

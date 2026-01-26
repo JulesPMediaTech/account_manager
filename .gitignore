@@ -1,0 +1,7 @@
+.venv/
+.env
+__pycache__/
+.vscode/
+.cache.sqlite
+ssh-text-paste.txt
+.pytest*
