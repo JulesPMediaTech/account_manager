@@ -3,14 +3,24 @@
 services:
   accmanager_service:
     build: .
-    ports:
-      - "4080:8000"
+    expose:
+      - "8000"  # Internal only, not published
     volumes:
       - ./app:/app
     environment:
       - FLASK_ENV=development
     secrets:
       - secret_key
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "4080:80"  # External access via nginx
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./app/static:/app/static:ro
+    depends_on:
+      - accmanager_service
 
 secrets:
   secret_key:

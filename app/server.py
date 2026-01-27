@@ -5,9 +5,17 @@ from wtforms.validators import DataRequired, Length, Regexp, InputRequired, Equa
 from flask_wtf import FlaskForm
 from os import getenv
 from dotenv import load_dotenv
+from pathlib import Path
 
 # Load environment variables from .env file
 load_dotenv()
+
+# Load SECRET_KEY from Docker secret or .env fallback
+secret_key = getenv('SECRET_KEY')
+if not secret_key:
+    secret_path = Path('/run/secrets/secret_key')
+    if secret_path.exists():
+        secret_key = secret_path.read_text().strip()
 
 
 class UserForm(FlaskForm):
@@ -42,7 +50,7 @@ app = Flask(__name__)
 N.B. to create a secret key, run the following in python shell:
 python -c "import secrets; print(secrets.token_hex(32))"
 '''
-app.config['SECRET_KEY'] = getenv('SECRET_KEY')
+app.config['SECRET_KEY'] = secret_key
 csrf = CSRFProtect(app)
 
 
@@ -87,7 +95,7 @@ def handle_data():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0',port=4080,debug=True)
+    app.run(host='0.0.0.0',port=8000,debug=True)
     
     # for production use, uncomment below and install waitress
     # from waitress import serve
