@@ -15,12 +15,26 @@ services:
   nginx:
     image: nginx:alpine
     ports:
-      - "4080:80"  # External access via nginx
+      - "80:80"  #  !!Let's Encrypt needs 80 for verification / renewals
+      - "4080:80" # Local HTTP access
+      - "4443:443" # External customised https port access via nginx
+ 
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./app/static:/app/static:ro
+      - ./certbot/conf:/etc/letsencrypt:ro
+      - ./certbot/www:/var/www/certbot:ro
     depends_on:
       - accmanager_service
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $!; nginx -s reload; done & nginx -g \"daemon off;\"'"
+
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+
 
 secrets:
   secret_key:

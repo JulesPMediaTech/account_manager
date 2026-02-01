@@ -6,3 +6,6 @@ __pycache__/
 ssh-text-paste.txt
 .pytest*
 .secrets/
+certbot/conf/*
+certbot/www/*
+*.DS_Store
