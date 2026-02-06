@@ -6,11 +6,36 @@ services:
     expose:
       - "8000"  # Internal only, not published
     volumes:
-      - ./app:/app
+      - ./:/app
     environment:
       - FLASK_ENV=development
+      - PYTHONUNBUFFERED=1  # needed so that print statements are immediately sent to stdout and not collected
+                          # If buffered, python collects print statements and only sends them out:
+                          # when buffer fills up, the program ends, a newline is encountered (for line-buffered mode)
+
+      # - DATABASE_URL=postgresql://accmanager:${POSTGRES_PASSWORD}@postgres:5432/accmanager_db # Example of passing DB password via env var. Not needed as it's read from secrets in server.py
     secrets:
       - secret_key
+      - db_password
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_USER=accmanager
+      - POSTGRES_PASSWORD_FILE=/run/secrets/db_password
+      - POSTGRES_DB=accmanager_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    secrets:
+      - db_password
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U accmanager -d accmanager_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   nginx:
     image: nginx:alpine
@@ -35,7 +60,11 @@ services:
       - ./certbot/www:/var/www/certbot
     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
 
+volumes:
+  postgres_data:
 
 secrets:
   secret_key:
     file: .secrets/secret_key
+  db_password:
+    file: .secrets/db_password

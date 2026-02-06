@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block head %}
-<title>Home Page</title>
+  <title>Home Page</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css',v=3) }}">
 {% endblock %}
 
 {% block body %}
@@ -23,12 +24,30 @@
     </accordion-menu>
 
   </header>
-  <p>Welcome to the Account Manager.</p>
 
+    <!-- Spinning Cube -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='components/cube-loader.css') }}">
+  <div class="cube-loader">
+    <div class="cube-top"></div>
+    <div class="cube-wrapper">
+      <span style="--i:0" class="cube-span"></span>
+      <span style="--i:1" class="cube-span"></span>
+      <span style="--i:2" class="cube-span"></span>
+      <span style="--i:3" class="cube-span"></span>
+    </div>
+  </div>
+
+
+  <div class="db-links">
+    <a href="{{ url_for('main.add_user') }}">Add User</a>
+    <a href="/query-user">Find User</a>
+    <a href="/edit-user">Edit User Infomation</a>
+    <a href="/delete-user">Delete User</a>
+  </div>
 
   <!-- Button to open the dialog -->
-  <button id="openModal">Open Modal</button>
-  <button id="openNonModal">Open Non-Modal</button>
+  <!-- <button id="openModal">Open Modal</button>
+  <button id="openNonModal">Open Non-Modal</button> -->
 
   <!-- Dialog element with a form -->
   <opaque-dialog id="myModal">
@@ -54,18 +73,6 @@
     });
   </script>
 
-  <!-- Spinning Cube -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='components/cube-loader.css') }}">
-  <div class="cube-loader">
-    <div class="cube-top"></div>
-    <div class="cube-wrapper">
-      <span style="--i:0" class="cube-span"></span>
-      <span style="--i:1" class="cube-span"></span>
-      <span style="--i:2" class="cube-span"></span>
-      <span style="--i:3" class="cube-span"></span>
-    </div>
-  </div>
-{% include 'partials/data_form.html' %}
 </div>
 
 

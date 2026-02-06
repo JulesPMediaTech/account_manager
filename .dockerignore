@@ -7,3 +7,4 @@ __pycache__
 .env
 .cache.sqlite
 ssh-text-paste.txt
+zz_app_OLD_STRUCTURE/

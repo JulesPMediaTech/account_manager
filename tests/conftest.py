@@ -15,7 +15,7 @@ import sys
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 import pytest
-from app.server import app  # noqa: E402
+from app.OLD_ORIG_server import app  # noqa: E402
 
 
 @pytest.fixture

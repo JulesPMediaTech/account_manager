@@ -3,7 +3,7 @@
 
 # sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from app.server import app, csrf
+from app.OLD_ORIG_server import app, csrf
 from flask_wtf.csrf import CSRFProtect
 
 def test_secret_key_loaded():
