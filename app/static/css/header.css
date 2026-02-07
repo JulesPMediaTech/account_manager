@@ -1,0 +1,47 @@
+.page-header {
+  display: flex;
+  align-items: center; /* Vertically aligns the icon and text */
+  gap: 25px; /* Adds some space between the icon and the text */
+  padding: 5px;
+  position: fixed;
+  background-color: black;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  box-sizing: border-box;  /* By default CSS calculates width as its CONTENT. This can be changed by setting box-sizing:border-box; property in the relevant selector. This way CSS width is content, padding, and border combined. */
+}
+
+.header-title {
+  font-family: "Comfortaa", cursive;
+  font-size: 1.5rem;
+}
+
+.header-left,
+.header-central,
+.header-right {
+  display: flex;
+  flex: 1;
+  gap: 25px;
+  align-items: center;
+  height: 50px;
+}
+
+/* .header-left {
+  background-color: rgb(26, 86, 205);
+}
+.header-central {
+  background-color: yellow;
+} */
+.header-right {
+  /* background-color: rgb(13, 33, 3); */
+  justify-content:right;
+}
+
+#sign-in {
+  margin-right: 30px;
+  width: 40px;
+  height: 40px;
+  fill: var(--text-color);
+  cursor: pointer;
+}

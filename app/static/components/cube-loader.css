@@ -1,6 +1,7 @@
 /* From Uiverse.io by andrew-demchenk0 */ 
 .cube-loader {
   position: relative;
+  top: 30px;
   left: 50%;
   width: 75px;
   height: 75px;

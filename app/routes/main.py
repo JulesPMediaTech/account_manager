@@ -7,16 +7,16 @@ bp = Blueprint('main', __name__)
 def home():
     return redirect(url_for('main.index'))
 
-@bp.route('/index', methods=['GET', 'POST'])
+@bp.route('/index')
 def index():
     status = request.args.get('status', '')
-    return render_template('index.html', status=status)
+    return render_template('index.html', status=status, title="Account Manager")
 
 @bp.route('/add_user', methods=['GET','POST'])
 def add_user():
     form = UserForm()
     if form.validate_on_submit():
-        print(f'got the response: {form.data}')
+        print ('sending form data')
     else:
         if request.method == 'POST' and form.errors:
             print(f'validation errors: {form.errors}')
@@ -24,12 +24,15 @@ def add_user():
                 getattr(form, field_name).data = ''
 
     status = request.args.get('status', '')
-    return render_template('add_user.html', status=status, form=form)
+    return render_template('add_user.html', status=status, form=form, title="Add User")
 
-# @bp.route('/submit', methods=['POST'])
-# def handle_data():
-#     username = request.form.get('user-id')
-#     print(f'username: {username}')
-#     if username:
-#         return f"Hello, {username}!"
-#     return "Invalid Data", 400
+@bp.route('/user_added', methods=['POST'])
+def user_added():
+    form = UserForm()
+    if form.validate_on_submit():
+        # Process the form data
+        print(f'got the response: {form.data}')
+    else:
+        print(f'Validation errors: {form.errors}')
+        return redirect(url_for('main.add_user'))
+    return render_template('user_added.html', form=form, title="User Added")

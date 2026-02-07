@@ -1,6 +1,6 @@
   <div class="data-form">
     <h2>Add User</h2>
-    <form id="stringfield" method="POST">
+    <form id="stringfield" method="POST" action="{{ url_for('main.user_added') }}">
       {{ form.hidden_tag() }}
       <div class="form-wrapper">
         <div class="col-span-2">

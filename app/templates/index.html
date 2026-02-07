@@ -1,42 +1,17 @@
-{% extends "base.html" %}
-{% block head %}
-  <title>Home Page</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css',v=3) }}">
-{% endblock %}
+{% extends "base.html" %} {% block head %}
+<title>Account Manager</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css',v=3) }}" >
+<link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='components/cube-loader.css') }}" />
 
+{% endblock %} 
 {% block body %}
+
+{% include 'partials/header.html' %}
+
 <div class="content">
-  <header class="page-header">
-    <burger-menu>
-      <a href="/index">Home</a>
-      <a href="/profile">Profile</a>
-      <a href="/settings">Settings</a>
-      <a href="/logout">Logout</a>
-    </burger-menu>
-    <h1>Account Manager</h1>
 
-
-    <accordion-menu id="login-header-accordion">
-      <h2 slot="label" style="margin: 0; font-size: 1.2rem;">Login</h2>
-      <div slot="content">
-        <login-widget id="login-in-menu"></login-widget>
-      </div>
-    </accordion-menu>
-
-  </header>
-
-    <!-- Spinning Cube -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='components/cube-loader.css') }}">
-  <div class="cube-loader">
-    <div class="cube-top"></div>
-    <div class="cube-wrapper">
-      <span style="--i:0" class="cube-span"></span>
-      <span style="--i:1" class="cube-span"></span>
-      <span style="--i:2" class="cube-span"></span>
-      <span style="--i:3" class="cube-span"></span>
-    </div>
-  </div>
-
+{% include 'partials/cube_loader.html' %}
 
   <div class="db-links">
     <a href="{{ url_for('main.add_user') }}">Add User</a>
@@ -44,37 +19,6 @@
     <a href="/edit-user">Edit User Infomation</a>
     <a href="/delete-user">Delete User</a>
   </div>
-
-  <!-- Button to open the dialog -->
-  <!-- <button id="openModal">Open Modal</button>
-  <button id="openNonModal">Open Non-Modal</button> -->
-
-  <!-- Dialog element with a form -->
-  <opaque-dialog id="myModal">
-    <form method="dialog">
-      <p>This is a dialog with a transparent backdrop.</p>
-      <button type="submit">Close</button>
-    </form>
-  </opaque-dialog>
-
-  <script>
-    const dialog = document.getElementById("myModal");
-    const openModalButton = document.getElementById("openModal");
-    const openNonModalButton = document.getElementById("openNonModal");
-
-    // Open the modal
-    openModalButton.addEventListener("click", () => {
-      dialog.showModal();
-    });
-
-    // Open the non-modal version
-    openNonModalButton.addEventListener("click", () => {
-      dialog.show();
-    });
-  </script>
-
 </div>
-
-
 
 {% endblock %}

@@ -14,7 +14,12 @@
     <a href="{{ url_for('main.index') }}">Home</a>
   </div>
 
-{% include 'partials/data_form.html' %}
+  <div class="review-submitted">
+    <p>User submitted the form:<p>
+    {{form.data}}
+  </div>
+
+
 </div>
 
 

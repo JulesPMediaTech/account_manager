@@ -46,15 +46,10 @@ body{
     padding: 0; 
 }
 
-.page-header {
-  display: flex;
-  align-items: center; /* Vertically aligns the icon and text */
-  gap: 15px; /* Adds some space between the icon and the text */
-  padding: 10px;
-  position: relative;
-}
+
 
 .content {
+    margin-top: 80px; /* Adjust this value based on the height of your header */
     padding: 20px;
 }
 
@@ -76,50 +71,5 @@ body{
     border:none;
     padding: 10px;
     width: 300px;
-}
-
-.data-form {
-  background: linear-gradient(to bottom, #646262, #969595);
-  
-  color: #201d1d;
-  position: relative; 
-  margin: 20px;
-  top: 40px;
-  padding: 20px;
-  border-radius: 20px;
-  /* z-index: -1; */
-}
-
-.form-wrapper {
-  display: grid;
-  grid-template-columns: repeat(2, max-content);
-  gap: 2rem 3rem;
-  margin-bottom: 20px;
-}
-.col-span-2 { grid-column: span 2; }
-.form-control { width: 100%; }
-
-.needed::before {
-  position:relative;
-  right: 10px;
-  content: "*";
-  color: rgb(101, 2, 2);
-  
-}
-
-.submit-btn {
-  background-color: azure;
-  border-radius: 5px;
-}
-
-.submit-btn:hover {
-  background-color: aquamarine;
-}
-
-.err {
-  display: inline-block;
-  color: rgb(184, 5, 5);
-  font-size: smaller;
-  line-height: 1.2;
 }
 
