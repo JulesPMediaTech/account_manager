@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from ..forms import UserForm
+from ..db import userdb
 
 bp = Blueprint('main', __name__)
 
@@ -23,16 +24,22 @@ def add_user():
             for field_name in form.errors:
                 getattr(form, field_name).data = ''
 
-    status = request.args.get('status', '')
-    return render_template('add_user.html', status=status, form=form, title="Add User")
+    return render_template('add_user.html', form=form, title="Add User")
 
 @bp.route('/user_added', methods=['POST'])
 def user_added():
     form = UserForm()
     if form.validate_on_submit():
         # Process the form data
-        print(f'got the response: {form.data}')
+        # print(f'got the response: {form.data}')
+        dbstatus = userdb.register_user(form.data)
     else:
         print(f'Validation errors: {form.errors}')
         return redirect(url_for('main.add_user'))
-    return render_template('user_added.html', form=form, title="User Added")
+    return render_template('user_added.html', status=dbstatus, form=form, title="User Added")
+
+@bp.route('/show_user_table')
+def show_user_table():
+    users = userdb.get_all_users()
+    users_dict = userdb.to_dict(users)
+    return render_template('show_user_table.html', users=users, usersdict=users_dict, title="User Contents")

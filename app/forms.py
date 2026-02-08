@@ -24,10 +24,12 @@ class UserForm(FlaskForm):
         InputRequired(message="Field cannot be empty"), 
         Length(min=7, max=20, message="Must be between 7 and 20 characters"),
         EqualTo('repeatPassword', message='Passwords must match')
-    ] if validatorsEnabled else [])
+    ] if validatorsEnabled else [],
+                             render_kw={"autocomplete": "new-password"})
 
     repeatPassword = PasswordField('Repeat Password', validators=[
         InputRequired(message="Field cannot be empty")
-    ] if validatorsEnabled else [])
+    ] if validatorsEnabled else [],
+                            render_kw={"autocomplete": "new-password"})
 
     submit = SubmitField('Submit')

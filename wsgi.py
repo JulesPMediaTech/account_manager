@@ -1,3 +1,3 @@
-from zz_app_OLD_STRUCTURE import create_app
+from app import create_app
 
 app = create_app()

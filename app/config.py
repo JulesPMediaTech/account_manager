@@ -15,3 +15,6 @@ class Config:
     SECRET_KEY = read_secret("SECRET_KEY", "/run/secrets/secret_key")
     DB_PASSWORD = read_secret("DB_PASSWORD", "/run/secrets/db_password")
     DATABASE_URL = f"postgresql://accmanager:{DB_PASSWORD}@postgres:5432/accmanager_db"
+    SQLALCHEMY_DATABASE_URI = f"postgresql://accmanager:{DB_PASSWORD}@postgres:5432/accmanager_db"
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    # WTF_CSRF_TIME_LIMIT = 5 # 5 seconds CSRF token expiry for testing

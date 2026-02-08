@@ -1,5 +1,6 @@
 .data-form,
-.review-submitted {
+.review-submitted,
+.show-table {
   color: #201d1d;
   position: relative; 
   margin: 20px;
@@ -14,6 +15,9 @@
 }
 .review-submitted {
   background: linear-gradient(to bottom, rgb(60, 80, 60), #64fd92);
+}
+.show-table {
+  background: linear-gradient(to bottom, #787413, #fdf869);
 }
 
 .form-wrapper {

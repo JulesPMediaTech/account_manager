@@ -14,15 +14,18 @@
     <a href="{{ url_for('main.index') }}">Home</a>
   </div>
 
-  <div class="review-submitted">
-    <p>User submitted the form:<p>
-    {{form.data}}
-    <p>Status result from SQL: {{status}} </p>
+  <div class="show-table">
+    <strong>Table of All Users:</strong>
+    {% for user in users %}
+    <p> {{user.id}} {{user.first_name}} {{user.last_name}} {{user.username}} {{user.password_hash}}</p>
+    {% endfor %}
+    {{ usersdict }}
   </div>
 
 
-</div>
 
+
+</div>
 
 
 {% endblock %}

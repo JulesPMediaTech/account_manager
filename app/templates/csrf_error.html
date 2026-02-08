@@ -1,0 +1,15 @@
+{% extends "base.html" %} 
+{% block head %}
+    <title>Account Manager</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}">
+    <meta http-equiv="refresh" content="1;url={{ request.referrer or url_for('main.index') }}">
+{% endblock %} 
+
+{% block body %}
+{% include 'partials/header.html' %}
+<div class="content">
+    <p>{{ reason }}</p>
+    <p>Regenerating CSRF token...<p>
+    <p>If you are not redirected, <a href="{{ request.referrer or url_for('main.index') }}">click here</a>.</p>
+</div>
+{% endblock %}
