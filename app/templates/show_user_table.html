@@ -3,6 +3,7 @@
   <title>Account Manager</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/data_form.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/user_table.css') }}">
 {% endblock %}
 
 {% block body %}
@@ -16,16 +17,35 @@
 
   <div class="show-table">
     <strong>Table of All Users:</strong>
-    {% for user in users %}
-    <p> {{user.id}} {{user.first_name}} {{user.last_name}} {{user.username}} {{user.password_hash}}</p>
-    {% endfor %}
-    {{ usersdict }}
+    <table class="user-table js-user-table" data-user-edit-url="{{ url_for('main.edit_user') }}">
+      <thead>
+        <th>ID</th>
+        <th>Created At</th>
+        <th>Username</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Password</th>
+      </thead>
+      <tbody>
+        {% for user in users %}
+        <tr>
+          <td> {{user.id}} </td>
+          <td> {{user.created_at.strftime('%d/%m/%Y, %H:%M:%S')}}</td>
+          <td> {{user.username}} </td> 
+          <td> {{user.first_name}} </td>
+          <td> {{user.last_name}} </td> 
+          <td> {{user.password_hash}} </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
   </div>
 
 
 
 
 </div>
-
+<script src="{{url_for('static', filename='js/user_table.js')}}"></script>
+<!-- <script src='../static/js/user_table.js'></script> -->
 
 {% endblock %}

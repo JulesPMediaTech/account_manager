@@ -17,4 +17,4 @@ class Config:
     DATABASE_URL = f"postgresql://accmanager:{DB_PASSWORD}@postgres:5432/accmanager_db"
     SQLALCHEMY_DATABASE_URI = f"postgresql://accmanager:{DB_PASSWORD}@postgres:5432/accmanager_db"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    # WTF_CSRF_TIME_LIMIT = 5 # 5 seconds CSRF token expiry for testing
+    # WTF_CSRF_TIME_LIMIT = 5 # set CSRF token expiry to 5 secs for testing error handling

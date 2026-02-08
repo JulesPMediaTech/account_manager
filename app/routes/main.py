@@ -43,3 +43,7 @@ def show_user_table():
     users = userdb.get_all_users()
     users_dict = userdb.to_dict(users)
     return render_template('show_user_table.html', users=users, usersdict=users_dict, title="User Contents")
+
+@bp.route('/edit_user')
+def edit_user():
+    return render_template('edit_user.html', title="Edit User")
