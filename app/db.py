@@ -1,9 +1,11 @@
 # from sqlalchemy import create_engine
 from sqlalchemy import select, inspect
+from .extensions import db
+from .models import User
 # from sqlalchemy.orm import sessionmaker, declarative_base, scoped_session
 
 # Base = declarative_base()
-from .models import db
+# from .models import db
 
 class UserDatabase:
     # def __init__(self):
@@ -20,7 +22,6 @@ class UserDatabase:
     #     return self.Session()
     
     def register_user(self, data):
-        from .models import User
         print (f'DB Received data: {data}')
         # session = self.get_session()
         try:
@@ -33,22 +34,27 @@ class UserDatabase:
             db.session.add(user)
             db.session.commit()
             user_id = user.id
-            db.session.close()
             return {'status': 'success', 'user_id': user_id}
         except Exception as e:
             db.session.rollback()
-            db.session.close()
             return {'status': 'error', 'message': str(e)}
             
             
     def get_all_users(self):
-        from .models import User
         # session = self.get_session()
         # 1. Create the select statement
         stmt = select(User)
         # 2. Execute and return scalar results (the User objects)
         users = db.session.scalars(stmt).all()
         return users
+    
+    def get_user_from_id(self, id):
+        stmt = select(User).where(User.id == id)
+        user = db.session.scalar(stmt)
+        return user
+    
+    def get_column_names(self):
+        return User.__table__.columns
         
     def to_dict(self,obj):
         users = []

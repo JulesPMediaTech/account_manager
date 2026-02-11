@@ -37,13 +37,19 @@
   
 }
 
-.submit-btn {
+.submit-btn,
+.cancel-add-user-btn {
   background-color: azure;
   border-radius: 5px;
+  transition: background-color 0.2s ease;
 }
 
+
 .submit-btn:hover {
-  background-color: aquamarine;
+  background-color: rgb(9, 226, 110);
+}
+.cancel-add-user-btn:hover {
+  background-color: rgb(89, 87, 84);
 }
 
 .err {

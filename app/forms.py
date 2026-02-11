@@ -9,7 +9,7 @@ class UserForm(FlaskForm):
         InputRequired(message="Field cannot be empty"),
         Length(min=5, max=40, message="Must be between 5 and 40 characters")
     ] if validatorsEnabled else [])
-
+    
     firstName = StringField('First Name', validators=[
         DataRequired(message="Field cannot be empty"), 
         Regexp(r'^[A-Za-z]+(?:[ -][A-Za-z]+)?$', message='Must contain letters or<br> spaced / hyphenated words')
@@ -33,3 +33,6 @@ class UserForm(FlaskForm):
                             render_kw={"autocomplete": "new-password"})
 
     submit = SubmitField('Submit')
+    
+    # cancel = SubmitField(name='Cancel', render_kw={'formnovalidate': True})
+        

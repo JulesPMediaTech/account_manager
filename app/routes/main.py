@@ -16,6 +16,7 @@ def index():
 @bp.route('/add_user', methods=['GET','POST'])
 def add_user():
     form = UserForm()
+    
     if form.validate_on_submit():
         print ('sending form data')
     else:
@@ -24,11 +25,14 @@ def add_user():
             for field_name in form.errors:
                 getattr(form, field_name).data = ''
 
-    return render_template('add_user.html', form=form, title="Add User")
+    return render_template('add_user.html', user=None, form=form, title="Add User")
 
 @bp.route('/user_added', methods=['POST'])
-def user_added():
+def user_added(return_to='main.index'):
     form = UserForm()
+    # if form.cancel.data:
+    #     print (f'CANCELLING. Returning to {return_to}')
+    #     return redirect(url_for(return_to))
     if form.validate_on_submit():
         # Process the form data
         # print(f'got the response: {form.data}')
@@ -42,8 +46,17 @@ def user_added():
 def show_user_table():
     users = userdb.get_all_users()
     users_dict = userdb.to_dict(users)
-    return render_template('show_user_table.html', users=users, usersdict=users_dict, title="User Contents")
+    return render_template('show_user_table.html', users=users, usersdict=users_dict, title="User Accounts")
 
-@bp.route('/edit_user')
-def edit_user():
-    return render_template('edit_user.html', title="Edit User")
+@bp.route('/edit_user/<int:user_id>', methods=['POST','GET'])
+def edit_user(user_id):
+    form = UserForm()
+    user = userdb.get_user_from_id(user_id)
+        # columns = userdb.get_column_names()
+    if request.method == 'POST' and form.validate_on_submit():
+        return render_template('added_user.html', status='Updated', form=form, title="User Edited")
+    elif request.method == 'POST' and form.errors:
+        print(f'Validation errors: {form.errors}')
+        return redirect(url_for('main.add_user'))
+    return render_template('edit_user.html', user=user, form=form, return_to="main.show_user_table", title="Edit User")   #GET method
+        

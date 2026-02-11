@@ -2,7 +2,6 @@
     width: 100%;
     border-collapse: collapse;
     margin-top: 10px;
-    table-layout: auto;
 }
 
 .user-table th, .user-table td {
@@ -15,8 +14,27 @@
     background-color: #8d8b8b;
     font-weight: bold;
     cursor: pointer;
+    position: relative;
+    padding-right: 20px; /* reserve arrow space */
 }
 
+/* reserve space even when not sorted */
+.user-table th::after {
+    content: "▲";          /* placeholder glyph */
+    position: absolute;
+    right: 8px;
+    opacity: 0;            /* invisible but keeps space */
+    pointer-events: none;
+}
+/* show arrow on sorted column */
+.user-table th.sorted-by-column::after {
+    opacity: 1;
+}
+
+/* track order via data-order */
+.user-table th[data-order="desc"].sorted-by-column::after {
+    content: "▼";
+}
 .user-table th:hover {
     background-color: #b0adad;
 }
@@ -26,9 +44,11 @@
     color: white;
 }
 
+
 .user-table tr:nth-child(even) {
     background-color: #f9f9f9;
 }
+
 
 .user-table tr:hover {
     background-color: #ddd;

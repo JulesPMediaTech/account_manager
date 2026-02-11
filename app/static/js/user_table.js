@@ -12,19 +12,11 @@ const editUrl = userTable.dataset.userEditUrl;
 const headers = userTable.querySelectorAll('thead th');
 let activeHeader = headers[0];  // first run - active header defaults to first column
 activeHeader.classList.add('sorted-by-column');
-const arrow = document.createElement('span');
-arrow.style.float = 'right';
-arrow.innerHTML = '&#9650;'
-activeHeader.appendChild(arrow);
-
 headers.forEach(header => {
     header.addEventListener('click', () => {
         const colIndex = header.cellIndex;
         const ascending = header.dataset.order !== 'asc'; //toggle
         header.dataset.order = ascending ? 'asc' : 'desc';
-        arrow.innerHTML = ascending ? '&#9650;' : '&#9660;' ; // up or down arrow
-        header.appendChild(arrow);
-        
 
         const rows = Array.from(tbody.querySelectorAll('tr'));
 
@@ -52,8 +44,16 @@ const tableRows = tbody.querySelectorAll('tr');
 tableRows.forEach(row => {
     row.addEventListener('click', () => {
         console.log('row clicked');
-        console.log(row);
-        window.location.href = editUrl;
+        const userId = row.dataset.userId // reads data-user-id
+        console.log(userId);
+        if (userId) {
+            // Build edit URL
+            const editUrl = `/edit_user/${userId}`;
+            console.log(`Redirecting to: ${editUrl}`)
+            window.location.href = editUrl;
+        }
+        
+        // window.location.href = editUrl;
     });
 });
 
