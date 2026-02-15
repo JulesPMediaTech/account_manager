@@ -1,15 +1,15 @@
 {% extends "base.html" %}
 {% block head %}
-  <title>Account Manager</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/data_form.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/user_table.css') }}">
+<title>Account Manager</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/data_form.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/user_table.css') }}">
 {% endblock %}
 
 {% block body %}
 <div class="content">
 
-{% include 'partials/header.html' %}
+  {% include 'partials/header.html' %}
 
   <div class="db-links">
     <a href="{{ url_for('main.index') }}">Home</a>
@@ -21,6 +21,7 @@
       <thead>
         <th>ID</th>
         <th style="width: 200px">Created At</th>
+        <th style="width: 200px">Modified</th>
         <th>Username</th>
         <th>First Name</th>
         <th>Last Name</th>
@@ -31,15 +32,23 @@
         <tr data-user-id="{{ user.id }}">
           <td> {{user.id}} </td>
           <td> {{user.created_at.strftime('%d/%m/%Y, %H:%M:%S')}}</td>
-          <td> {{user.username}} </td> 
+          <td> {{user.modified.strftime('%d/%m/%Y, %H:%M:%S') if user.modified else ''}}</td>
+          <td> {{user.username}} </td>
           <td> {{user.first_name}} </td>
-          <td> {{user.last_name}} </td> 
+          <td> {{user.last_name}} </td>
           <td> {{user.password_hash}} </td>
         </tr>
         {% endfor %}
       </tbody>
     </table>
   </div>
+
+  {# Hidden form for editing users via POST #}
+  <form id="edit-user-form" action="{{ url_for('main.forward_user_id') }}" method="POST" style="display: none;">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <input type="hidden" name="user_id" id="edit-user-id">
+    <input type="hidden" name="redir" value="main.edit_user">
+  </form>
 
 
 

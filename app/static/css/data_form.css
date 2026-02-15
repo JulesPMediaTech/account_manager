@@ -1,6 +1,8 @@
 .data-form,
 .review-submitted,
-.show-table {
+.show-table,
+.edit-submitted,
+.user-deleted {
   color: #201d1d;
   position: relative; 
   margin: 20px;
@@ -15,6 +17,12 @@
 }
 .review-submitted {
   background: linear-gradient(to bottom, rgb(60, 80, 60), #64fd92);
+}
+.edit-submitted {
+  background: linear-gradient(to bottom, #5c3503, #e18206);
+}
+.user-deleted {
+  background: linear-gradient(to bottom, #ff2525, #5b0d0d);
 }
 .show-table {
   background: linear-gradient(to bottom, #787413, #fdf869);

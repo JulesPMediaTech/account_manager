@@ -73,3 +73,23 @@ body{
     width: 300px;
 }
 
+.db-links {
+  margin-top: 50px;
+  margin-left: 20px;
+  font-size: 20px;
+}
+
+.db-links > a:link {
+  color: aquamarine;
+}
+.db-links > a:visited {
+  color: rgb(230, 126, 236);
+}
+.db-links > a:hover {
+  color: rgb(255, 73, 63);
+}
+.db-links a>:active {
+  color: rgb(222, 201, 13);
+}
+
+

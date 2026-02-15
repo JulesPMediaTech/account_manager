@@ -25,7 +25,7 @@ def add_user():
             for field_name in form.errors:
                 getattr(form, field_name).data = ''
 
-    return render_template('add_user.html', user=None, form=form, title="Add User")
+    return render_template('add_user.html', user=None, form=form, submit_to="main.user_added", cancel_url="main.index", title="Add User")
 
 @bp.route('/user_added', methods=['POST'])
 def user_added(return_to='main.index'):
@@ -48,15 +48,79 @@ def show_user_table():
     users_dict = userdb.to_dict(users)
     return render_template('show_user_table.html', users=users, usersdict=users_dict, title="User Accounts")
 
-@bp.route('/edit_user/<int:user_id>', methods=['POST','GET'])
-def edit_user(user_id):
+@bp.route('/receive_user_id', methods=['POST'])
+def forward_user_id():
+    user_id = request.form.get('user_id')
+    userdb.set_user_id(user_id)
+    redir = request.form.get('redir')
+    print (f'next redirect will be {redir}')
+    # Define a list of safe, allowed redirect targets and satisfy the linter!!!
+    allowed_redirects = ['main.edit_user', 'main.change_password', 'main.delete_user'] 
+    if redir not in allowed_redirects:
+        redir = 'main.show_user_table'
+    return redirect(url_for(redir))
+
+@bp.route('/edit_user', methods=['POST','GET'])
+def edit_user():
+    back_to = 'main.show_user_table'
+    user = userdb.get_user()
+    if not user:
+        return redirect (url_for(back_to))
+    
     form = UserForm()
-    user = userdb.get_user_from_id(user_id)
         # columns = userdb.get_column_names()
-    if request.method == 'POST' and form.validate_on_submit():
+    if request.method == 'POST' and form.validate_on_submit(): # POST method is when data is submitted by the user
         return render_template('added_user.html', status='Updated', form=form, title="User Edited")
     elif request.method == 'POST' and form.errors:
         print(f'Validation errors: {form.errors}')
         return redirect(url_for('main.add_user'))
-    return render_template('edit_user.html', user=user, form=form, return_to="main.show_user_table", title="Edit User")   #GET method
+    return render_template('edit_user.html', user=user, form=form, submit_to="main.user_edited", cancel_url=back_to, title="Edit User")   #GET method
+        
+@bp.route('/user_edited', methods=['POST'])
+def user_edited():
+    form = UserForm()
+    user_id = userdb.get_user_id()
+    dbstatus = userdb.update_user(form.data, user_id)
+    return render_template('user_edited.html', form=form, status=dbstatus, title='User Edited')
+
+@bp.route('/change_password', methods=['POST','GET'])
+def change_password():
+    back_to = 'main.edit_user'
+    user = userdb.get_user()
+    if not user:
+        return redirect (url_for(back_to))
+    form = UserForm()
+    if request.method == 'POST' and form.validate_on_submit():
+        return render_template('user_password_changed.html', status="Updated", form=form, title="Password Changed")
+    elif request.method == 'POST' and form.errors:
+        print(f'Validation errors: {form.errors}')
+        return redirect(url_for('main.edit_user'))
+    return render_template('change_password.html', user=user, form=form, submit_to="main.password_changed",cancel_url=back_to, title="Change Password")
+
+@bp.route('/password_changed', methods=['POST'])
+def password_changed():
+    form = UserForm()
+    user_id = userdb.get_user_id()
+    dbstatus = userdb.update_password(form.data, user_id)
+    return render_template ('user_password_changed.html', form=form, status=dbstatus, title="Password Update")
+        
+
+@bp.route('/delete_user', methods=['POST'])
+def delete_user():
+    print ('DELETE ROUTE')
+    if 'user_id' in request.form:
+        userdb.set_user_id(request.form['user_id'])
+    back_to = 'main.edit_user'
+    user = userdb.get_user()
+    if not user:
+        return redirect (url_for(back_to))
+    dbstatus = userdb.delete_user(user.id)
+    return render_template('user_deleted.html', status=dbstatus, title="Delete User")
+       
+    # result = userdb.delete_user(user.id)
+    # if result['status'] == 'success':
+    #     return redirect(url_for(back_to))
+    # else:
+    #     return f"Error deleting user: {result['message']}"
+
         

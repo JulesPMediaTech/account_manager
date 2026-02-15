@@ -43,17 +43,11 @@ headers.forEach(header => {
 const tableRows = tbody.querySelectorAll('tr');
 tableRows.forEach(row => {
     row.addEventListener('click', () => {
-        console.log('row clicked');
-        const userId = row.dataset.userId // reads data-user-id
-        console.log(userId);
+        const userId = row.dataset.userId;
         if (userId) {
-            // Build edit URL
-            const editUrl = `/edit_user/${userId}`;
-            console.log(`Redirecting to: ${editUrl}`)
-            window.location.href = editUrl;
+            document.getElementById('edit-user-id').value = userId;
+            document.getElementById('edit-user-form').submit();
         }
-        
-        // window.location.href = editUrl;
     });
 });
 

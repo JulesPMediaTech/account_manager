@@ -1,54 +1,80 @@
-  <div class="data-form">
-    <form id="stringfield" method="POST" action="{{ url_for('main.user_added') }}">
-      {{ form.hidden_tag() }}
-      <div class="form-wrapper">
-        <div class="col-span-2">
-          {{ form.username.label }} <br>
-          {{ form.username(class="form-control", placeholder="Enter username", value=(user.username or '')) }} 
-          {% for error in form.username.errors %} <span class="err">[{{ error }}]</span> {% endfor %}
-          <!-- {{ form.username.data }}  -->
+<div class="data-form">
+  <form id="stringfield" method="POST" action="{{ url_for(submit_to) }}">
+    {{ form.hidden_tag() }}
+    <div class="form-wrapper">
+      <div class="col-span-2">
+        {{ form.username.label }} <br>
+        {{ form.username(class="form-control", placeholder="Enter username", value=(user.username or '')) }}
+        {% for error in form.username.errors %} <span class="err">[{{ error }}]</span> {% endfor %}
+        <!-- {{ form.username.data }}  -->
 
-        </div>
-        <div>
+      </div>
+      <div>
         {{ form.firstName.label }} <br>
         {{ form.firstName(class="form-control", placeholder="Enter First Name", value=(user.first_name or '')) }} <br>
         {% for error in form.firstName.errors %} <span class="err">[{{ error|safe }}]</span> {% endfor %}
 
-        </div>
-        <div>
+      </div>
+      <div>
         {{ form.lastName.label }} <br>
         {{ form.lastName(class="form-control", placeholder="Enter Last Name", value=(user.last_name or '')) }} <br>
         {% for error in form.lastName.errors %} <span class="err">[{{ error|safe }}]</span> {% endfor %}
-        
-        </div>
-        <div>
-        {% if not user %}
-          {{ form.password.label }} <br>
-          {{ form.password(class="form-control", placeholder="Choose a password") }} <br>
-          {% for error in form.password.errors %} <span class="err">[{{ error }}]</span> {% endfor %}
-          
-          </div>
-          <div>
-          {{ form.repeatPassword.label }} <br>
-          {{ form.repeatPassword(class="form-control", placeholder="Re-type the password") }} <br>
-          {% for error in form.repeatPassword.errors %} <span class="err">[{{ error }}]</span> {% endfor %}
 
-        {% else %}
-          <button class="change-password-btn">Change Password</button>
-          <button class="delete-user-btn">Delete User</button>
+      </div>
+      <div>
+        {% if not user %}
+        {{ form.password.label }} <br>
+        {{ form.password(class="form-control", placeholder="Choose a password") }} <br>
+        {% for error in form.password.errors %} <span class="err">[{{ error }}]</span> {% endfor %}
+
+      </div>
+      <div>
+        {{ form.repeatPassword.label }} <br>
+        {{ form.repeatPassword(class="form-control", placeholder="Re-type the password") }} <br>
+        {% for error in form.repeatPassword.errors %} <span class="err">[{{ error }}]</span> {% endfor %}
+
         {% endif %}
 
-        </div>
       </div>
+    </div>
+    <p>
       {{ form.submit(class='submit-btn') }}
-      <button type="button" class="cancel-add-user-btn js-cancel-add-user-button">Cancel</button>
-      <script>
-      cancelButton = document.querySelector('.js-cancel-add-user-button');
-      cancelButton.addEventListener('click', () => {
-         window.location.href = "{{ url_for(return_to or 'main.index') }}"
+      <button type="button" class="cancel-add-user-btn js-cancel-add-user-button"
+        data-referrer="{{ url_for(cancel_url) }}">Cancel</button>
+    </p>
 
-      });
-      </script>
+  </form>
 
-    </form>
-  </div>
+  {% if user %}
+  {# <form action="{{ url_for('main.forward_user_id') }}" method="POST" style="display: inline;">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <input type="hidden" name="user_id" value="{{ user.id }}">
+    <input type="hidden" name="redir" value="main.change_password">
+    <button type="submit" class="change-password-btn">Change Password</button>
+  </form> #}
+
+
+  <!-- Button for 'Change Password' -->
+  <button type="button" class="js-post-link change-password-btn" data-action="{{ url_for('main.forward_user_id') }}"
+    data-user-id="{{ user.id }}" data-redir="main.change_password">
+    Change Password
+  </button>
+
+  <!-- Button for 'Delete User' (Example) -->
+  <button type="button" class="js-post-link delete-user-btn" data-action="{{ url_for('main.delete_user') }}"
+    data-user-id="{{ user.id }}" data-confirm-message="Are you sure you want to delete this user?">
+    Delete User
+  </button>
+
+
+
+  {# <button type="submit" formaction="{{ url_for('main.delete_user', user_id=user.id) }}" formmethod="POST"
+    formnovalidate onclick="return confirm('Are you sure you want to delete this user?');"
+    class="delete-user-btn">Delete User</button> #}
+  {% endif %}
+
+  <script src="{{ url_for('static', filename='js/cancel_edit_button.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/post_link.js') }}"></script>
+
+
+</div>
