@@ -26,8 +26,10 @@ class UserDatabase:
         return {
             # form key : model attribute
             "username": "username",
+            "email" : "email",
             "firstName": "first_name",
             "lastName": "last_name",
+            "role" : "role",
             "password" : "password_hash"
     }
     

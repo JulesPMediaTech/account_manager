@@ -10,8 +10,9 @@ const editUrl = userTable.dataset.userEditUrl;
 */
 
 const headers = userTable.querySelectorAll('thead th');
-let activeHeader = headers[0];  // first run - active header defaults to first column
-activeHeader.classList.add('sorted-by-column');
+// let activeHeader = headers[0];  // first run - active header defaults to first column
+// activeHeader.classList.add('sorted-by-column');
+let activeHeader;
 headers.forEach(header => {
     header.addEventListener('click', () => {
         const colIndex = header.cellIndex;

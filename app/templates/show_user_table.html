@@ -23,8 +23,10 @@
         <th style="width: 200px">Created At</th>
         <th style="width: 200px">Modified</th>
         <th>Username</th>
+        <th>Email</th>
         <th>First Name</th>
         <th>Last Name</th>
+        <th>Role</th>
         <th>Password</th>
       </thead>
       <tbody>
@@ -34,8 +36,10 @@
           <td> {{user.created_at.strftime('%d/%m/%Y, %H:%M:%S')}}</td>
           <td> {{user.modified.strftime('%d/%m/%Y, %H:%M:%S') if user.modified else ''}}</td>
           <td> {{user.username}} </td>
+          <td> {{user.email}} </td>
           <td> {{user.first_name}} </td>
           <td> {{user.last_name}} </td>
+          <td> {{user.role}} </td>
           <td> {{user.password_hash}} </td>
         </tr>
         {% endfor %}
