@@ -1,0 +1,205 @@
+body.login-page {
+    --card-bg: #1e293b;
+    --card-bg-glass: rgba(30, 41, 59, 0.7);
+
+    --accent: #8b5cf6;
+    /* Violet-500 */
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --border: #334155;
+    --input-bg: #020617;
+
+    --success: #22c55e;
+    --danger: #ef4444;
+
+    --font-main: 'Inter', sans-serif;
+
+
+    font-family: var(--font-main);
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    padding: 2rem;
+    line-height: 1.5;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+
+/* Background Decorations */
+.background-decor-1 {
+    position: fixed;
+    top: -10%;
+    right: -5%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, rgba(15, 23, 42, 0) 70%);
+    z-index: -1;
+    pointer-events: none;
+}
+
+.background-decor-2 {
+    position: fixed;
+    bottom: -10%;
+    left: -10%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, rgba(15, 23, 42, 0) 70%);
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* Glass Panel Utility */
+.login-pane {
+    display: grid;
+    width: 120%;
+    justify-self: center;
+    background: var(--card-bg-glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 1.5rem;
+    padding: 2rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    /* overflow: hidden;
+    position: relative; */
+    gap: 2rem 3rem;
+    margin-bottom: 20px;
+}
+
+
+.label-input-pair {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    gap: 20px;
+}
+
+.label-input-pair input {
+    width: 100%;
+}
+.label-input-pair label {
+    justify-content: right;
+}
+
+.login-button {
+    width: 100%;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    border: none;
+    border-radius: 0.75rem;
+    padding: 1rem;
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.3);
+}
+
+.login-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 25px -5px rgba(59, 130, 246, 0.4);
+    filter: brightness(1.1);
+}
+
+.login-button:active {
+    transform: translateY(0);
+}
+
+.login-pane input[type="text"],
+.login-pane input[type="password"] {
+    background-color: var(--input-bg);
+    border: 1px solid var(--border);
+    border-radius: 0.75rem;
+    padding: 0.875rem 1.25rem;
+    color: var(--text-main);
+    font-family: inherit;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.login-pane input[type="text"]:focus,
+.login-pane input[type="password"]:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+    background-color: rgba(2, 6, 23, 0.8);
+}
+
+.login-pane label {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    margin-left: 0.25rem;
+}
+
+.login-pane input[type="checkbox"] {
+    width: 1.5rem;
+    height: 1.5rem;
+    cursor: pointer;
+}
+
+.login-pane input[type="checkbox"]:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+    background-color: rgba(2, 6, 23, 0.8);
+}
+
+.login-pane input[type="checkbox"]:checked {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+    background-color: rgba(2, 6, 23, 0.8);
+}
+
+.login-pane input[type="checkbox"]:checked:hover {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+    background-color: rgba(2, 6, 23, 0.8);
+}
+
+.login-pane input[type="checkbox"]:checked:active {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+    background-color: rgba(2, 6, 23, 0.8);
+}
+
+.login-pane input[type="checkbox"]:checked:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+    background-color: rgba(2, 6, 23, 0.8);
+}
+
+.label-checkboxes {
+    display: flex;
+    /* gap: 20px; */
+    justify-content: space-between;
+}
+
+#show-password-group,
+#remember-me-group {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+#show-password-group {
+    justify-content: left;
+}
+
+#remember-me-group {
+    justify-content: right;
+}

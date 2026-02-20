@@ -27,6 +27,14 @@
 }
 
 
+:root {
+    --bg-dark: #0f172a;
+    --primary: #3b82f6;
+    /* Blue-500 */
+    --primary-glow: #60a5fa;
+
+}
+
 
 body{
     
@@ -79,16 +87,16 @@ body{
   font-size: 20px;
 }
 
-.db-links > a:link {
+a:link {
   color: aquamarine;
 }
-.db-links > a:visited {
+a:visited {
   color: rgb(230, 126, 236);
 }
-.db-links > a:hover {
+a:hover {
   color: rgb(255, 73, 63);
 }
-.db-links a>:active {
+a:active {
   color: rgb(222, 201, 13);
 }
 

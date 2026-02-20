@@ -1,10 +1,10 @@
 from flask import Flask, render_template
 from flask_wtf.csrf import CSRFProtect, CSRFError
 from .config import Config
-# from .db import db, Base
-from .extensions import db as fdb, migrate
+from .extensions import db as fdb, migrate, login_manager
 from . import models  # ensure models are imported
 from .routes.main import bp as main_bp
+from .routes.auth import auth_bp
 
 def create_app():
     app = Flask(__name__)
@@ -16,15 +16,18 @@ def create_app():
     fdb.init_app(app)
     migrate.init_app(app, fdb)
     
-    # db.init_db(app.config["DATABASE_URL"])
-    # with app.app_context():
-    #     Base.metadata.create_all(bind=db.engine)
+    # Init LoginManager
+    login_manager.init_app(app)
+    login_manager.login_view = 'auth.login'  # type: ignore # The route to redirect to for login @login_required
 
+    
+    
     # CSRF
     CSRFProtect(app)
 
     # Blueprints
     app.register_blueprint(main_bp)
+    app.register_blueprint(auth_bp)
 
     print("Running Account Manager Server...")
     

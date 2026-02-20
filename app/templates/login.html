@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block head %}
+<title>Account Manager</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+{% endblock %}
+
+{% block body %}
+
+<body class="login-page">
+  <div class="background-decor-1"></div>
+  <div class="background-decor-2"></div>
+
+  <header>
+    <div class="db-links">
+      <a href="{{ url_for('main.index') }}">Home</a>
+    </div>
+  </header>
+
+  <div class="content">
+  
+
+    <div class="login-pane">
+      <div class="login-form-wrapper">
+        <form id="login-form" method="POST" action="{{ url_for('auth.login') }}">
+          {{ form.hidden_tag() }}
+          <div class="label-input-pair">
+            {{ form.username.label }}
+            {{ form.username(placeholder="Username") }}
+          </div> <br>
+          {% for error in form.username.errors %} <span class="err">[{{ error }}]</span> {% endfor %}
+
+
+          <div class="label-input-pair">
+            {{ form.password.label }}
+            {{ form.password(placeholder="Password") }}
+          </div> <br>
+          {% for error in form.password.errors %} <span class="err">[{{ error }}]</span> {% endfor %}
+
+          <div class="label-checkboxes">
+            <div id="show-password-group">
+              <label for="show-password">Show Password</label>
+              <input type="checkbox" class="show-password" id="js-show-password-checkbox">
+            </div>
+            <div id="remember-me-group">
+              {{ form.remember_me.label }}
+              {{ form.remember_me }}
+            </div>
+          </div> <br>
+
+          {{ form.submit(class="login-button") }}
+        </form>
+      </div>
+    </div>
+  </div>
+
+<script src="{{ url_for('static', filename='js/login.js')}}"></script>
+
+</body>
+{% endblock %}

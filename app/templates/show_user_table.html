@@ -40,7 +40,8 @@
           <td> {{user.first_name}} </td>
           <td> {{user.last_name}} </td>
           <td> {{user.role}} </td>
-          <td> {{user.password_hash}} </td>
+          <td title="{% if user.password_hash | length > 50 %}Hidden Password{% else %} Unhashed! {% endif %}">••••••••</td>
+
         </tr>
         {% endfor %}
       </tbody>

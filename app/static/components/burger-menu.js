@@ -1,4 +1,4 @@
-const burgerMenuTemplate = document.createElement('template');
+const burgerMenuTemplate = document.createElement("template");
 
 burgerMenuTemplate.innerHTML = `
   <style>
@@ -30,6 +30,8 @@ burgerMenuTemplate.innerHTML = `
     }
     .menu-panel {
       position: absolute;
+      display: flex;
+      flex-direction: column;
       z-index: 10;
       max-height: 0;
       overflow: hidden;
@@ -37,9 +39,10 @@ burgerMenuTemplate.innerHTML = `
       background-color: var(--menu-bg-color, #744949);
       color: var(--text-color, black);
       border-radius: 4px;
-      width: fit-content;
+      width: max-content;
       border: none; 
       box-shadow: 0 2px 4px rgba(237, 230, 230, 0.1);
+      box-sizing: border-box;
     }
     .menu-panel.open {
       border: 1px solid #ccc;
@@ -74,43 +77,47 @@ burgerMenuTemplate.innerHTML = `
 class BurgerMenu extends HTMLElement {
   constructor() {
     super();
-    this.attachShadow({ mode: 'open' });
+    this.attachShadow({ mode: "open" });
     this.shadowRoot.appendChild(burgerMenuTemplate.content.cloneNode(true));
     this.handleDocumentClick = this.handleDocumentClick.bind(this);
   }
 
   connectedCallback() {
-    const burgerIcon = this.shadowRoot.querySelector('.burger-icon');
-    const menuPanel = this.shadowRoot.querySelector('.menu-panel');
+    const burgerIcon = this.shadowRoot.querySelector(".burger-icon");
+    const menuPanel = this.shadowRoot.querySelector(".menu-panel");
 
-    burgerIcon.addEventListener('click', () => this.toggleMenu());
+    burgerIcon.addEventListener("click", () => this.toggleMenu());
 
     // Listen for clicks on the component itself to handle slotted links
-    this.addEventListener('click', (e) => {
-      const anchor = e.target.closest('a');
-      if (anchor && this.shadowRoot.querySelector('.menu-panel.open')) {
+    this.addEventListener("click", (e) => {
+      const anchor = e.target.closest("a");
+      if (anchor && this.shadowRoot.querySelector(".menu-panel.open")) {
         e.preventDefault();
         this.closeMenu();
 
         if (anchor.href !== window.location.href) {
-          menuPanel.addEventListener('transitionend', () => {
-            window.location.href = anchor.href;
-          }, { once: true });
+          menuPanel.addEventListener(
+            "transitionend",
+            () => {
+              window.location.href = anchor.href;
+            },
+            { once: true },
+          );
         }
       }
     });
 
     // Add a single, permanent listener to remove the 'open' class after closing
-    menuPanel.addEventListener('transitionend', () => {
+    menuPanel.addEventListener("transitionend", () => {
       if (!menuPanel.style.maxHeight) {
-        menuPanel.classList.remove('open');
+        menuPanel.classList.remove("open");
       }
     });
   }
 
   toggleMenu() {
-    const menuPanel = this.shadowRoot.querySelector('.menu-panel');
-    if (menuPanel.classList.contains('open')) {
+    const menuPanel = this.shadowRoot.querySelector(".menu-panel");
+    if (menuPanel.classList.contains("open")) {
       this.closeMenu();
     } else {
       this.openMenu();
@@ -118,20 +125,23 @@ class BurgerMenu extends HTMLElement {
   }
 
   openMenu() {
-    const burgerIcon = this.shadowRoot.querySelector('.burger-icon');
-    const menuPanel = this.shadowRoot.querySelector('.menu-panel');
-    burgerIcon.classList.add('change');
-    menuPanel.classList.add('open');
+    const burgerIcon = this.shadowRoot.querySelector(".burger-icon");
+    const menuPanel = this.shadowRoot.querySelector(".menu-panel");
+    burgerIcon.classList.add("change");
+    menuPanel.classList.add("open");
     menuPanel.style.maxHeight = menuPanel.scrollHeight + "px";
-    setTimeout(() => document.addEventListener('mousedown', this.handleDocumentClick), 0);
+    setTimeout(
+      () => document.addEventListener("mousedown", this.handleDocumentClick),
+      0,
+    );
   }
 
   closeMenu() {
-    const burgerIcon = this.shadowRoot.querySelector('.burger-icon');
-    const menuPanel = this.shadowRoot.querySelector('.menu-panel');
-    burgerIcon.classList.remove('change');
+    const burgerIcon = this.shadowRoot.querySelector(".burger-icon");
+    const menuPanel = this.shadowRoot.querySelector(".menu-panel");
+    burgerIcon.classList.remove("change");
     menuPanel.style.maxHeight = null; // This triggers the closing animation
-    document.removeEventListener('mousedown', this.handleDocumentClick);
+    document.removeEventListener("mousedown", this.handleDocumentClick);
   }
 
   handleDocumentClick(event) {
@@ -141,4 +151,4 @@ class BurgerMenu extends HTMLElement {
   }
 }
 
-window.customElements.define('burger-menu', BurgerMenu);
+window.customElements.define("burger-menu", BurgerMenu);

@@ -1,17 +1,32 @@
 <header class="page-header">
+  <div id="js-auth" data-logout-url="{{ url_for('auth.logout') }}"
+    data-login-url="{{ url_for('auth.login') }}"
+    data-is-authenticated="{{ current_user.is_authenticated }}"
+    style="display: none;"></div>
+
   <div class="header-left">
     <burger-menu>
       <a href="/index">Home</a>
-      <a href="/profile">Profile</a>
-      <a href="/settings">Settings</a>
-      <a href="/logout">Logout</a>
+      <a href="{{ url_for('main.add_user') }}">Add User</a>
+      <a href="{{ url_for('main.show_user_table') }}">Show Users</a>
     </burger-menu>
     <div class="header-title">{{title}}</div>
   </div>
   <div class="header-central"></div>
   <div class="header-right">
-    <svg id="sign-in">
-      <use href="static/images/sprite_sheet.svg#YT-sign-in" />
+    {% if current_user.is_authenticated %}
+    {{ current_user.username }}
+      <div class="user-manager">
+      <svg class="sign-in js-sign-in">
+        <use href="/static/images/sprite_sheet.svg#green-tick-circle" fill="green" stroke-width="4"></use>
+      </svg>
+      {% include 'partials/user_manager_menu.html' %}
+      </div>
+    {% else %}
+    <svg class="sign-in js-sign-in" data-login-url="{{ url_for('auth.login') }}">
+      <use href="/static/images/sprite_sheet.svg#YT-sign-in"></use>
     </svg>
+    {% endif %}
   </div>
+  <script src="{{ url_for('static', filename='js/sign_in_icon.js') }}"></script>
 </header>

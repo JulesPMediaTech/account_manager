@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, EmailField, SelectField, SubmitField
+from wtforms import StringField, PasswordField, EmailField, SelectField, SubmitField, BooleanField
 from wtforms.validators import DataRequired, Length, Regexp, InputRequired, EqualTo
 
 class UserForm(FlaskForm):
@@ -47,7 +47,18 @@ class UserForm(FlaskForm):
     ] if validatorsEnabled else [],
                             render_kw={"autocomplete": "new-password"})
 
-    submit = SubmitField('Submit')
-    
+    submit = SubmitField('Submit') 
     # cancel = SubmitField(name='Cancel', render_kw={'formnovalidate': True})
+    
+    def process(self, formdata=None, obj=None, data=None, **kwargs):
+        super().process(formdata=formdata, obj=obj, data=data, **kwargs)
+        if self.email.data and not self.email.data.strip():
+            self.email.data = None
         
+        
+class LoginForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    remember_me = BooleanField('Remember Me')
+    submit = SubmitField('Log In')
+    

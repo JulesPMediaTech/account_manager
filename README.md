@@ -46,8 +46,8 @@ app/routes/
 └── errors.py # custom error handlers (404, 500)
 
 ## TO DO LIST
-- [ ] Password hashing
-- [ ] Add ROLES to database: 
+- [x] Password hashing
+- [x] Add ROLES to database: 
 
     - <b><u>ADMINISTRATIVE ROLES("The Staff")</b></u>
     - - <b>Super / Owner (Level 1) </b><br>
@@ -66,5 +66,6 @@ app/routes/
     - - <b>Guest (no account)</b>
 
 
+- [x] Login & Authentication
+- [ ] Role test by setting up demo pages
 - [ ] Github Actions
-- [ ] Login & Authentication

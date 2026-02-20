@@ -2,4 +2,19 @@
     <symbol id="YT-sign-in" viewBox="0 0 24 24">
         <path d="M12 1C5.925 1 1 5.925 1 12s4.925 11 11 11 11-4.925 11-11S18.075 1 12 1Zm0 2a9 9 0 016.447 15.276 7 7 0 00-12.895 0A9 9 0 0112 3Zm0 2a4 4 0 100 8 4 4 0 000-8Zm0 2a2 2 0 110 4 2 2 0 010-4Zm-.1 9.001L11.899 16a5 5 0 014.904 3.61A8.96 8.96 0 0112 21a8.96 8.96 0 01-4.804-1.391 5 5 0 014.704-3.608Z"></path>
     </symbol>
+    
+    <symbol id="green-tick-circle" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="4"></circle>
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="green"></path>
+    </symbol>
+
+    <symbol id="green-tick-circle2" viewBox="0 0 24 24">
+        <!-- The outer circle: gets color from text color via 'currentColor' -->
+        <circle cx="12" cy="12" r="11" stroke="currentColor" stroke-width="4"/>
+        
+        <!-- The solid green tick -->
+        <path d="M12 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="#4CAF50" stroke="green" stroke-width="1.5" />
+    </symbol>
+
 </svg>
+

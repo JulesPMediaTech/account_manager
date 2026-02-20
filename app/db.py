@@ -3,6 +3,7 @@ from sqlalchemy import select, inspect, func
 from sqlalchemy.exc import SQLAlchemyError
 from .extensions import db
 from .models import User
+from werkzeug.security import generate_password_hash, check_password_hash
 # from sqlalchemy.orm import sessionmaker, declarative_base, scoped_session
 
 # Base = declarative_base()
@@ -35,14 +36,17 @@ class UserDatabase:
     
     def register_user(self, data):
         print (f'DB Received data: {data}')
-        # session = self.get_session()
         try:
             user = User()
             filled = 0
             # add user data fields to database model using field_map
             for form_key, model_attr in self.field_map().items():
-                if data[form_key]:
-                    setattr(user, model_attr, data[form_key])
+                if form_key in data and data[form_key]:
+                    # Hash password if the key is 'password'
+                    if form_key == 'password':
+                        setattr(user, model_attr, generate_password_hash(data[form_key]))
+                    else:
+                        setattr(user, model_attr, data[form_key])
                     filled += 1
             if filled: 
                 db.session.add(user)
@@ -67,13 +71,17 @@ class UserDatabase:
             
             # password doesn't get updated here (it's blank) so remove it from data form
             field_map = self.field_map()
-            del field_map['password']
+            if 'password' in field_map:
+                del field_map['password']
             
             changed = 0
             for form_key, model_attr in field_map.items():
-                if form_key in data and data[form_key] != getattr(user,model_attr):
+                model_data = getattr(user,model_attr)
+                if form_key in data and data[form_key] != model_data and data[form_key]:
                     setattr(user, model_attr, data[form_key])
                     changed += 1
+                if model_data == '' or not model_data: 
+                    setattr(user, model_attr, None)
             if changed:
                 user.modified = func.now()
                 db.session.commit()
@@ -87,8 +95,10 @@ class UserDatabase:
         try: 
             stmt = db.select(User).where(User.id == id)
             user = db.session.execute(stmt).scalar_one()
-            if data['password'] != '' and data['password'] != user.password_hash :
-                user.password_hash = data['password']
+            # Note: We can't compare plain text to hash easily here without check_password_hash
+            # For now, we just check if it's not empty. Login logic will handle verification later.
+            if data['password'] != '':
+                user.password_hash = generate_password_hash(data['password'])
                 user.modified = func.now()
                 db.session.commit()
                 return {"status": "success! Password changed","user_id" : user.id }

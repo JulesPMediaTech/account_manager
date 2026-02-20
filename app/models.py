@@ -1,10 +1,8 @@
-# from sqlalchemy import Column, Integer, String, DateTime, func
-# from .db import Base
 from sqlalchemy import func
-from .extensions import db
+from flask_login import UserMixin
+from .extensions import db, login_manager
 
-# class User(Base):
-class User(db.Model):
+class User(db.Model, UserMixin): # Your User model needs to inherit from UserMixin. This adds the necessary properties for Flask-Login to manage user sessions (e.g., is_authenticated, get_id()).
     __tablename__ = 'users'
     id = db.Column(db.Integer, key="ID", primary_key=True)
     created_at = db.Column(db.DateTime, key="Created At" ,default=func.now())
@@ -14,10 +12,14 @@ class User(db.Model):
     first_name = db.Column(db.String(80), key="First Name", nullable=False)
     last_name = db.Column(db.String(80), key="Last Name", nullable=False)
     role = db.Column(db.String(64), default='user', nullable=False)
-    password_hash = db.Column(db.String(128), key="Password", nullable=False)
+    password_hash = db.Column(db.String(256), key="Password", nullable=False)
     
     def __repr__(self):
         return {'id':self.id,
                 'username': self.username,
                 'role': self.role
                 }
+        
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
