@@ -9,3 +9,4 @@ ssh-text-paste.txt
 certbot/conf/*
 certbot/www/*
 *.DS_Store
+backups/

@@ -69,3 +69,18 @@ app/routes/
 - [x] Login & Authentication
 - [ ] Role test by setting up demo pages
 - [ ] Github Actions
+- [ ] Implement sin-bin roles - disabled and banned with own DB of reasons
+- [ ] Embellish ReadMe further:
+   
+### include:
+- What the app does
+- Architecture diagram (even ASCII is fine)
+- How to run locally
+- How to run with Docker
+- How secrets are handled
+- CI badge (later)
+- Structure
+- Clean folders
+- No junk committed
+- .env.example
+- .gitignore correct

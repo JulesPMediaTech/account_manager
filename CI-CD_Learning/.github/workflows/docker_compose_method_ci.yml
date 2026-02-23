@@ -1,0 +1,33 @@
+name: Docker Compose CI
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  test-compose:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Create .env file
+      run: |
+        echo "SECRET_KEY=testing_secret_key" >> .env
+        echo "DB_PASSWORD=password" >> .env
+        echo "DB_USER=user" >> .env
+        echo "DB_NAME=account_manager" >> .env
+
+    - name: Build and Start Containers
+      run: docker compose up -d --build
+
+    - name: Check Running Containers
+      run: docker ps -a
+
+    - name: Run Tests Inside Container
+      # This executes pytest *inside* the running 'app' container
+      run: docker compose exec -T app pytest
+      
+    - name: Tear Down
+      if: always()
+      run: docker compose down
