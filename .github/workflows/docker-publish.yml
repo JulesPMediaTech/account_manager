@@ -1,4 +1,4 @@
-name: Build and Push Docker Image
+name: Build, Test and Push Docker Image
 
 on:
   push:
@@ -6,6 +6,7 @@ on:
     branches: ["main"]
   pull_request:
     branches: ["main"]
+  workflow_dispatch: # for manual runs from the Actions tab
 
 env:
   IMAGE_NAME: account_manager_flask
@@ -24,8 +25,18 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      - name: Run tests
+        run: |
+          docker build -t accmanager-test .
+          docker run --rm \
+            -e SECRET_KEY=ci-test-key \
+            -e DB_PASSWORD=ci-test-password \
+            accmanager-test \
+            pytest tests/ -v
+
       # This builds the image and pushes it to the registry
       - name: Build and push
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: docker/build-push-action@v5
         with:
           context: .

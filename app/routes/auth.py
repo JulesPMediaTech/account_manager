@@ -10,7 +10,7 @@ auth_bp = Blueprint('auth', __name__)
 def login():
     if current_user.is_authenticated:
         print ('authenticated... going back to index')
-        return redirect(url_for('main.index'))
+        return redirect(url_for('main.index')), 302
     
     form = LoginForm()
     if form.validate_on_submit():
@@ -25,6 +25,7 @@ def login():
         else:
             print ('UNsuccessful')
             flash('Login Unsuccessful. Please check username and password', 'danger')
+            return redirect(url_for('main.index'))
             
     return render_template('login.html', title='Sign In', form=form)
 
@@ -34,3 +35,5 @@ def logout():
     logout_user()
     print('Logging Out....')
     return redirect(url_for('main.index'))
+
+

@@ -3,8 +3,13 @@
 
 # sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from app.OLD_ORIG_server import app, csrf
+# from app.OLD_ORIG_server import app, csrf
+from app import create_app
 from flask_wtf.csrf import CSRFProtect
+
+app = create_app()
+csrf = CSRFProtect(app)
+
 
 def test_secret_key_loaded():
     """Test that SECRET_KEY is loaded from .env"""

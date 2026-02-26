@@ -1,0 +1,9 @@
+# In .github/workflows/docker-publish.yml, before the push step:
+- name: Run tests
+  run: |
+    docker build -t accmanager-test .
+    docker run --rm \
+      -e SECRET_KEY=ci-test-key \
+      -e DB_PASSWORD=ci-test-password \
+      accmanager-test \
+      pytest tests/ -v

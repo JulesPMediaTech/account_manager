@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, EmailField, SelectField, SubmitField, BooleanField
 from wtforms.validators import DataRequired, Length, Regexp, InputRequired, EqualTo
+from .roles import Roles as roles
 
 class UserForm(FlaskForm):
     validatorsEnabled = False
@@ -25,15 +26,7 @@ class UserForm(FlaskForm):
         Regexp(r'^[A-Za-z]+(?:[ -][A-Za-z]+)?$', message='Must contain letters or<br> spaced / hyphenated words')
     ] if validatorsEnabled else [])
     
-    role = SelectField('Role', choices=[
-        ('super', 'Owner Super Admin'),
-        ('admin', 'Administrator'),
-        ('mod', 'Moderator'),
-        ('enterprise', 'Enterprise User'),
-        ('pro', 'Pro User'),
-        ('user', 'User'),
-        ('viewer', 'Viewer')
-    ], default='user', validators=[DataRequired('must have a role assigned')])
+    role = SelectField('Role', choices=roles.allUsers, default='user', validators=[DataRequired('must have a role assigned')])
 
     password = PasswordField('Password', validators=[
         InputRequired(message="Field cannot be empty"), 
@@ -54,6 +47,11 @@ class UserForm(FlaskForm):
         super().process(formdata=formdata, obj=obj, data=data, **kwargs)
         if self.email.data and not self.email.data.strip():
             self.email.data = None
+            
+class DeactivateUserForm(FlaskForm):
+    role = SelectField('Role', choices=roles.allInactive, default='disabled', validators=[DataRequired('choose type')])
+    reason = StringField('Reason', validators=[DataRequired(message='Field cannot be empty')])
+    submit = SubmitField('Submit')
         
         
 class LoginForm(FlaskForm):

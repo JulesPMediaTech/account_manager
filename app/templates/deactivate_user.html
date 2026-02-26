@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block head %}
+  <title>Account Manager</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/data_form.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="content">
+        {% include 'partials/header.html' %}
+        <div class="db-links">
+            <a href="{{ url_for('main.index') }}">Home</a>
+        </div>
+
+        <div class="data-form">
+            <form id="deactivate-form" method="POST" action="{{ url_for('main.user_deactivated') }}">
+                {{ form.hidden_tag() }}
+                <p>Deactivate: {{ user.username }} </p>
+                <p>(current role: {{ user.role }})</p>
+                <div class="deactivate-form-role">
+                    <div>Set Disable Status:</div>
+                    {{ form.role }}
+                </div>
+                <div class="deactivate-form-reason">
+                    <div>{{ form.reason.label }}:</div>
+                    {{ form.reason (placeholder="Enter a reason") }}
+                </div>
+                <div class="deactivate-form-btn">
+                    {{ form.submit }}
+                    <button type="button" class="cancel-add-user-btn js-cancel-add-user-button"
+                        data-referrer="{{ url_for(cancel_url) }}">Cancel</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+{% endblock %}
+

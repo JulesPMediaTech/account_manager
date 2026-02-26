@@ -66,3 +66,24 @@
   font-size: smaller;
   line-height: 1.2;
 }
+
+.deactivate-form-role,
+.deactivate-form-reason {
+  display: flex;
+  gap: 30px;
+  font-size: 18px;
+}
+
+.deactivate-form-role > div,
+.deactivate-form-reason > div {
+  text-align: right;
+  min-width: 180px;
+}
+
+.deactivate-form-reason > input {
+  width: 500px;
+}
+
+.deactivate-form-btn {
+  margin-left: 210px;
+}

@@ -6,11 +6,13 @@ from . import models  # ensure models are imported
 from .routes.main import bp as main_bp
 from .routes.auth import auth_bp
 
-def create_app():
+def create_app(test_config=None):
     app = Flask(__name__)
     app.config.from_object(Config)
+    if test_config:
+        app.config.update(test_config)
     print("WTF_CSRF_TIME_LIMIT =", app.config.get("WTF_CSRF_TIME_LIMIT"))
-    
+
 
     # Init DB
     fdb.init_app(app)
@@ -33,6 +35,10 @@ def create_app():
     
     @app.errorhandler(CSRFError)
     def handle_csrf_error(e):
-        return render_template('csrf_error.html', reason=e.description), 400
-
+        return render_template('errors/csrf_error.html', reason=e.description), 400
+    
+    @app.errorhandler(403)
+    def handle_forbidden(e):
+        return render_template('errors/forbidden_error.html', reason=e.description), 403
+    
     return app

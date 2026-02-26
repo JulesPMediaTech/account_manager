@@ -23,6 +23,7 @@
       {% include 'partials/user_manager_menu.html' %}
       </div>
     {% else %}
+    <a href="{{ url_for('auth.login') }}"> Sign In</a>
     <svg class="sign-in js-sign-in" data-login-url="{{ url_for('auth.login') }}">
       <use href="/static/images/sprite_sheet.svg#YT-sign-in"></use>
     </svg>

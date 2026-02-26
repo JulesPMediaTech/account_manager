@@ -14,12 +14,14 @@ class User(db.Model, UserMixin): # Your User model needs to inherit from UserMix
     role = db.Column(db.String(64), default='user', nullable=False)
     password_hash = db.Column(db.String(256), key="Password", nullable=False)
     
-    def __repr__(self):
-        return {'id':self.id,
-                'username': self.username,
-                'role': self.role
-                }
-        
+    def __init__(self,**kwargs,):
+        super().__init__(**kwargs)
+        if getattr(self,"role", None) is None:
+            self.role = "user"
+    
+    def __repr__(self) -> str:
+        return f"User(id={self.id}, username='{self.username}', role='{self.role}')"        
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))

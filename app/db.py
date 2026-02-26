@@ -80,8 +80,8 @@ class UserDatabase:
                 if form_key in data and data[form_key] != model_data and data[form_key]:
                     setattr(user, model_attr, data[form_key])
                     changed += 1
-                if model_data == '' or not model_data: 
-                    setattr(user, model_attr, None)
+                # if model_data == '' or not model_data: 
+                #     setattr(user, model_attr, None)
             if changed:
                 user.modified = func.now()
                 db.session.commit()
@@ -118,7 +118,18 @@ class UserDatabase:
         except SQLAlchemyError as e:
             db.session.rollback()
             return {"status": "error","message" : str(e) }
-            
+        
+        
+    def deactivate_user(self, id, dis_role):
+        try:
+            user = self.get_user_from_id(id)
+            if user:
+                user.role = dis_role
+                db.session.commit()
+                return {'status': f'success! User deactivated with role {dis_role}'}
+        except SQLAlchemyError as e:
+            db.session.rollback()
+            return {"status": "error","message" : str(e) }
 
             
             

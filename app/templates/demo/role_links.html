@@ -1,0 +1,52 @@
+{% extends "base.html" %} {% block head %}
+<title>Account Manager</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}">
+
+{% endblock %} 
+{% block body %}
+
+{% include 'partials/header.html' %}
+
+<div class="content">
+
+{% if current_user.is_authenticated %}
+  {% set role = current_user.role %}  
+  <h1>Welcome, {{current_user.username}}</h1>
+  <h2> Your Role is: {{role}}</h2>
+
+  {% if role in roleGroup['staffers'] %}
+    <h3>You can only see this LINK if you are a STAFFER</h3>
+  {% endif %}
+
+  {% if role in (roleGroup['staffers'] + roleGroup['members']) %}
+    <h3><strong>ALL</strong> ACTIVE accounts will able to see this</h3>
+  {% endif %}
+
+  {% if role in roleGroup['paid'] %}
+    <h3>You can only see this LINK if you are a PAID MEMBER</h3>
+  {% endif %}
+
+  {% if role in roleGroup['inactive'] %}
+    <h3><strong>YOU SUCK!</strong> Your account is DEACTIVATED</h3>
+  {% endif %}
+
+{% else %}
+  <h3>You are NOT logged in!</h3>
+{% endif %}
+
+
+
+  <div class="db-links">
+    <a href="{{ url_for('main.index') }}">Home</a>
+    <a href="{{ url_for('main.show_user_table') }}">Show Users</a>
+  </div>
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      {% for message in messages %}
+        <p>{{ message }}</p>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+</div>
+
+{% endblock %}

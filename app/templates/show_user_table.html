@@ -31,7 +31,7 @@
       </thead>
       <tbody>
         {% for user in users %}
-        <tr data-user-id="{{ user.id }}">
+        <tr data-user-id="{{ user.id }}" class="{{ 'disabled' if user.role in roleGroup['inactive'] else '' }}">
           <td> {{user.id}} </td>
           <td> {{user.created_at.strftime('%d/%m/%Y, %H:%M:%S')}}</td>
           <td> {{user.modified.strftime('%d/%m/%Y, %H:%M:%S') if user.modified else ''}}</td>

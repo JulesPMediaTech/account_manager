@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block head %}
+  <title>Account Manager</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/data_form.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="content">
+
+{% include 'partials/header.html' %}
+
+
+  <div class="user-deactivated">
+    <p>Status result from SQL: {{status}} </p>
+  <div class="db-links">
+    <a href="{{ url_for('main.show_user_table') }}">Back to user list</a>
+    <a href="{{ url_for('main.index') }}">Home</a>
+  </div>
+  </div>
+
+
+</div>
+
+
+
+{% endblock %}

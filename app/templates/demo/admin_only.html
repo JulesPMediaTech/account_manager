@@ -1,8 +1,6 @@
 {% extends "base.html" %} {% block head %}
 <title>Account Manager</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css',v=3) }}" >
 <link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}">
-<link rel="stylesheet" href="{{ url_for('static', filename='components/cube-loader.css') }}" />
 
 {% endblock %} 
 {% block body %}
@@ -11,15 +9,11 @@
 
 <div class="content">
 
-{% include 'partials/cube_loader.html' %}
-
+<h3>You can only see this page if you are ADMIN</h3>
 
   <div class="db-links">
-    <a href="{{ url_for('main.add_user') }}">Add User</a>
+    <a href="{{ url_for('main.index') }}">Home</a>
     <a href="{{ url_for('main.show_user_table') }}">Show Users</a>
-    <a href="{{ url_for('main.demo_admin_only') }}">Test Admin Access</a>
-    <a href="{{ url_for('main.demo_role_links') }}">Demo Role Links</a>
-    {# <a href="{{ url_for('main.edit_user') }}">Edit User Infomation</a> #}
   </div>
   {% with messages = get_flashed_messages() %}
     {% if messages %}

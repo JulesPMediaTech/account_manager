@@ -1,0 +1,12 @@
+services:
+  test:
+    build: .
+    volumes:
+      - ./:/app
+    environment:
+      - SECRET_KEY=test-secret-key
+      - DB_PASSWORD=test-db-password
+    command: pytest tests/ -v
+
+  # To Run:
+  # docker compose -f docker-compose.test.yml run --rm test

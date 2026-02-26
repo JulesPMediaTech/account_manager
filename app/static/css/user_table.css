@@ -45,11 +45,15 @@
 }
 
 
-.user-table tr:nth-child(even) {
+.user-table tr:nth-child(even):not(.disabled) {
     background-color: #f9f9f9;
 }
 
 
 .user-table tr:hover {
     background-color: #ddd;
+}
+
+.disabled {
+     background-color: rgb(245, 108, 108);
 }

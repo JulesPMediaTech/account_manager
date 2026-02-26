@@ -1,6 +1,8 @@
 from flask import Blueprint, render_template, request, redirect, url_for
-from ..forms import UserForm
+from ..forms import UserForm, DeactivateUserForm
 from ..db import userdb
+from ..custom_decorators import roles_required
+from ..roles import Roles as roles
 
 bp = Blueprint('main', __name__)
 
@@ -46,7 +48,7 @@ def user_added(return_to='main.index'):
 def show_user_table():
     users = userdb.get_all_users()
     users_dict = userdb.to_dict(users)
-    return render_template('show_user_table.html', users=users, usersdict=users_dict, title="User Accounts")
+    return render_template('show_user_table.html', users=users, roleGroup=roles.roleGroups, usersdict=users_dict, title="User Accounts")
 
 @bp.route('/receive_user_id', methods=['POST'])
 def forward_user_id():
@@ -74,7 +76,8 @@ def edit_user():
     elif request.method == 'POST' and form.errors:
         print(f'Validation errors: {form.errors}')
         return redirect(url_for('main.add_user'))
-    return render_template('edit_user.html', user=user, form=form, submit_to="main.user_edited", cancel_url=back_to, title="Edit User")   #GET method
+    form.role.data = user.role or 'user'
+    return render_template('edit_user.html', user=user, form=form, roleGroup=roles.roleGroups, submit_to="main.user_edited", cancel_url=back_to, title="Edit User")   #GET method
         
 @bp.route('/user_edited', methods=['POST'])
 def user_edited():
@@ -116,7 +119,39 @@ def delete_user():
         return redirect (url_for(back_to))
     dbstatus = userdb.delete_user(user.id)
     return render_template('user_deleted.html', status=dbstatus, title="Delete User")
-       
+
+@bp.route('/deactivate_user', methods=['GET','POST'])
+@roles_required('super','admin')
+def deactivate_user():
+    
+    back_to = 'main.edit_user'
+    user = userdb.get_user()
+    if not user:
+        return redirect(url_for(back_to))
+    form = DeactivateUserForm()
+    if request.method == 'POST' and form.validate_on_submit():
+        return render_template('user_deactivated.html', status="Updated", form=form, title="User Deactivated")
+    return render_template('deactivate_user.html', form=form, user=user, cancel_url=back_to, title='Deactivate User')
+    
+   
+@bp.route('/user_deactivated', methods=["POST"])
+@roles_required('admin')
+def user_deactivated():
+    form = DeactivateUserForm()
+    user_id = userdb.get_user_id()
+    dbstatus = userdb.deactivate_user(user_id, form.role.data)
+    return render_template('user_deactivated.html', status=dbstatus, title="User Deactivated" )
+
+@bp.route('/demo_admin_only')
+@roles_required('admin')
+def demo_admin_only():
+    return render_template('demo/admin_only.html', title="Admin Only")
+
+@bp.route('/demo_role_links')
+def demo_role_links():
+    return render_template('demo/role_links.html', roleGroup=roles.roleGroups, title="Check Your User Privileges")
+
+
     # result = userdb.delete_user(user.id)
     # if result['status'] == 'success':
     #     return redirect(url_for(back_to))

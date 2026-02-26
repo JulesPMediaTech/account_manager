@@ -28,8 +28,8 @@
       </div>
 
       <div>
-        {{ form.role.label }} <br>
-        {{ form.role(class="form-control", placeholder="Choose a Role", value=(user.role or 'user')) }} <br>
+        {{ form.role.label }} <br> 
+        {{ form.role(class="form-control") }} <br>
         {% for error in form.role.errors %} <span class="err">[{{ error|safe }}]</span> {% endfor %}
       </div>
 
@@ -69,6 +69,12 @@
       data-user-id="{{ user.id }}" data-confirm-message="Are you sure you want to delete this user?">
       Delete User
     </button>
+    <!-- Button for 'Deactivate User' (Example) -->
+    <button type="button" id="js-deactivate-user-btn" class="js-post-link deactivate-user-btn"
+     data-action="{{ url_for('main.deactivate_user') }}" data-user-role="{{ current_user.role }}"
+      data-user-id="{{ user.id }}" data-confirm-message="Are you sure you want to deactivate this user?">
+      Deactivate User
+    </button>
 
 
     {# <form action="{{ url_for('main.forward_user_id') }}" method="POST" style="display: inline;">
@@ -85,5 +91,6 @@
 
   <script src="{{ url_for('static', filename='js/cancel_edit_button.js') }}"></script>
   <script src="{{ url_for('static', filename='js/post_link.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/deactivate_user_button.js') }}"></script>
 
 </div>
