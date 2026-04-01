@@ -31,7 +31,8 @@
       </thead>
       <tbody>
         {% for user in users %}
-        <tr data-user-id="{{ user.id }}" class="{{ 'disabled' if user.role in roleGroup['inactive'] else '' }}">
+        <tr data-user-id="{{ user.id }}" data-user-role="{{ user.role }}"
+            class="{{ 'disabled' if user.role in roleGroup['inactive'] else '' }}">
           <td> {{user.id}} </td>
           <td> {{user.created_at.strftime('%d/%m/%Y, %H:%M:%S')}}</td>
           <td> {{user.modified.strftime('%d/%m/%Y, %H:%M:%S') if user.modified else ''}}</td>
@@ -55,7 +56,19 @@
     <input type="hidden" name="redir" value="main.edit_user">
   </form>
 
-
+{% with messages = get_flashed_messages(category_filter=["warning_modal"]) %}
+  {% if messages %}
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const dialog = document.getElementById("js-dlg-warning-main");
+        if (dialog) {
+          dialog.querySelector('.js-dlg-warning-message-pane').innerHTML="{{ messages | tojson | safe }}";
+          dialog.showModal();
+        }
+      });
+    </script>
+  {% endif %}
+{% endwith %}
 
 
 </div>

@@ -27,12 +27,14 @@
                 </div>
                 <div class="deactivate-form-btn">
                     {{ form.submit }}
-                    <button type="button" class="cancel-add-user-btn js-cancel-add-user-button"
+                    <button type="button" class="cancel-add-user-btn js-cancel-button"
                         data-referrer="{{ url_for(cancel_url) }}">Cancel</button>
                 </div>
             </form>
         </div>
 
     </div>
+    <script src="{{ url_for('static', filename='js/cancel_button.js') }}"></script>
+
 {% endblock %}
 

@@ -20,7 +20,19 @@ class User(db.Model, UserMixin): # Your User model needs to inherit from UserMix
             self.role = "user"
     
     def __repr__(self) -> str:
-        return f"User(id={self.id}, username='{self.username}', role='{self.role}')"        
+        return f"User(id={self.id}, username='{self.username}', role='{self.role}')"
+    
+class InactiveUser(db.Model):
+    __tablename__ = 'inactive_users'
+    id = db.Column(db.Integer, key='ID', primary_key=True)
+    deactivated_on = db.Column(db.DateTime, key="Deactivated on" ,default=func.now())
+    username = db.Column(db.String(80), key="Username", index=True, unique=True, nullable=False)
+    active_role = db.Column(db.String(64), key="Last Active Role", nullable=False)
+    inactive_role = db.Column(db.String(64), key="Current Role State", default="disabled", nullable=False)
+    staff_username = db.Column(db.String(80), key="Staffer", nullable=False)
+    reason = db.Column(db.String(250), key="Reason", nullable=False)
+    
+    
 
 @login_manager.user_loader
 def load_user(user_id):

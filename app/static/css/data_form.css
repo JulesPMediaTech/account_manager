@@ -13,19 +13,19 @@
 }
 
 .data-form {
-  background: linear-gradient(to bottom, #646262, #969595);
+  background: linear-gradient(to bottom, #cacaca, #969595);
 }
 .review-submitted {
   background: linear-gradient(to bottom, rgb(60, 80, 60), #64fd92);
 }
 .edit-submitted {
-  background: linear-gradient(to bottom, #5c3503, #e18206);
+  background: linear-gradient(to bottom, #fbab42, #e18206);
 }
 .user-deleted {
   background: linear-gradient(to bottom, #ff2525, #5b0d0d);
 }
 .show-table {
-  background: linear-gradient(to bottom, #787413, #fdf869);
+  background: linear-gradient(to bottom, #c8c556, #fdf869);
 }
 
 .form-wrapper {

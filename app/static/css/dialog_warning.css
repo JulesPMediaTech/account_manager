@@ -1,0 +1,98 @@
+
+.dlg-warning-main {
+    --bg-pane: #3a1f1f;
+    --bg-window: #230202;
+    --text-warn-col: rgb(249, 135, 135);
+    --text-warn-head: red;
+
+    min-width: 400px;
+    /* min-height: 300px; */
+    background-color: var(--bg-window);
+    color: var(--text-color);
+    border-radius: 12px;
+    border-width: 5px;
+    border-color: var(--text-warn-col);
+    box-sizing: border-box;
+}
+
+.dlg-warning-main[open] {
+    animation: dlg-warning-fade-in 280ms ease-out;
+}
+
+
+.dlg-warning-main::backdrop {
+    backdrop-filter: blur(5px);
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.dlg-warning-main[open]::backdrop {
+    animation: dlg-warning-backdrop-fade-in 280ms ease-out;
+}
+
+@keyframes dlg-warning-fade-in {
+    from {
+        opacity: 0;
+        transform: scale(0.96);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes dlg-warning-backdrop-fade-in {
+    from {
+        background-color: rgba(0, 0, 0, 0);
+    }
+    to {
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .dlg-warning-main[open],
+    .dlg-warning-main[open]::backdrop {
+        animation: none;
+    }
+}
+
+.dlg-warning-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* background-color: rgb(4, 4, 75); */
+    background-color: var(--bg-pane);
+    color: var(--text-warn-head);
+    position:absolute;
+    height: 35px;
+    width: 100%;
+    top: 0;
+    left: 0;
+    font-size: 20px;
+    font-weight: 700;
+    
+}
+
+.dlg-warning-content {
+    margin-top: 50px;
+}
+
+.dlg-warning-message-pane {
+    background-color: var(--bg-pane);
+    padding: 20px;
+    border-radius: 12px;
+    color: var(--text-warn-col);
+}
+
+.dlg-warning-ok-button {
+    position: relative;
+    left: 50%; transform: translateX(-50%);
+    height: 30px;
+    width: 200px;
+    border-radius: 10px;
+    background: linear-gradient(90deg, rgb(205, 0, 0),rgb(105, 0, 40));
+    margin-top: 20px;
+    color: rgb(245, 197, 197);
+    font-weight: 800;
+    font-size: 18px;
+} 

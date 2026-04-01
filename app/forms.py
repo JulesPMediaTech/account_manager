@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, EmailField, SelectField, SubmitField, BooleanField
+from wtforms import StringField, PasswordField, EmailField, SelectField, SubmitField, BooleanField, HiddenField
 from wtforms.validators import DataRequired, Length, Regexp, InputRequired, EqualTo
 from .roles import Roles as roles
 
@@ -60,3 +60,6 @@ class LoginForm(FlaskForm):
     remember_me = BooleanField('Remember Me')
     submit = SubmitField('Log In')
     
+class DialogConfirm(FlaskForm):
+    message = HiddenField(default='This is the default dialog message')
+    submit = SubmitField('OK')

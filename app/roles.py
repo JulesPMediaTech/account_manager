@@ -22,6 +22,11 @@ class Roles():
         'admin',
         'mod'
     ]
+    
+    senior = [
+        'super',
+        'admin'
+    ]
 
     # Non staff, client or paid member accounts
     members = [
@@ -46,7 +51,17 @@ class Roles():
     roleGroups = {
         'all' : all,
         'staffers' : staffers,
+        'senior' : senior,
         'paid' : paid,
         'members' : members,
         'inactive' : inactive
     }
+    
+    @classmethod
+    def roleHierarchy(cls):
+        return { key[0]:n for n,key in enumerate(cls.allUsers) }
+        
+    @classmethod
+    def compareSeniority(cls, u1=None, u2=None):
+        h = cls.roleHierarchy()
+        return h[u1] < h[u2] if (u1 in h and u2 in h) else False

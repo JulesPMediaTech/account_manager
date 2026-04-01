@@ -50,7 +50,7 @@
     </div>
     <p>
       {{ form.submit(class='submit-btn') }}
-      <button type="button" class="cancel-add-user-btn js-cancel-add-user-button"
+      <button type="button" class="cancel-add-user-btn js-cancel-button"
         data-referrer="{{ url_for(cancel_url) }}">Cancel</button>
     </p>
 
@@ -87,10 +87,10 @@
     {# <button type="submit" formaction="{{ url_for('main.delete_user', user_id=user.id) }}" formmethod="POST"
       formnovalidate onclick="return confirm('Are you sure you want to delete this user?');"
       class="delete-user-btn">Delete User</button> #}
+    <script src="{{ url_for('static', filename='js/deactivate_user_button.js') }}"></script>
   {% endif %}
 
-  <script src="{{ url_for('static', filename='js/cancel_edit_button.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/cancel_button.js') }}"></script>
   <script src="{{ url_for('static', filename='js/post_link.js') }}"></script>
-  <script src="{{ url_for('static', filename='js/deactivate_user_button.js') }}"></script>
 
 </div>

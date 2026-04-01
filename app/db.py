@@ -2,12 +2,17 @@
 from sqlalchemy import select, inspect, func
 from sqlalchemy.exc import SQLAlchemyError
 from .extensions import db
-from .models import User
-from werkzeug.security import generate_password_hash, check_password_hash
+from .models import User, InactiveUser
+from werkzeug.security import generate_password_hash
 # from sqlalchemy.orm import sessionmaker, declarative_base, scoped_session
 
 # Base = declarative_base()
 # from .models import db
+
+
+def list_tables():
+    inspector = inspect(db.engine)
+    return inspector.get_table_names()
 
 class UserDatabase:
     # def __init__(self):
@@ -22,6 +27,11 @@ class UserDatabase:
     
     # def get_session(self):
     #     return self.Session()
+    
+    @property
+    def table_exists(self):
+        inspector = inspect(db.engine)
+        return inspector.has_table('users')
     
     def field_map(self):
         return {
@@ -58,12 +68,14 @@ class UserDatabase:
             db.session.rollback()
             return {'status': 'error', 'message': str(e)}
         
-    def set_user_id(self, id):
+    @property
+    def user_id(self):
+        return getattr(self,'id',None)
+    
+    @user_id.setter
+    def user_id(self,id):
         self.id = id
-        
-    def get_user_id(self):
-        return getattr(self, 'id', None)
-        
+                
     def update_user(self,data,id):
         try:
             stmt = db.select(User).where(User.id == id)
@@ -119,22 +131,47 @@ class UserDatabase:
             db.session.rollback()
             return {"status": "error","message" : str(e) }
         
+    def reset_user_role(self,user):
+        if user:
+            user.role = 'user'
+            db.session.commit()
+            return {"status" : "success! User role set to user"}
+        return {"status": "error", "message": "User not found"}
         
-    def deactivate_user(self, id, dis_role):
+    def deactivate_user(self, id, inactive_role, reason):
+        userdb_status = {"status": "error", "message": "User not found"}
+        dis_status = {"status": "error", "message": "not executed due to userdb error"}
         try:
             user = self.get_user_from_id(id)
             if user:
-                user.role = dis_role
+                dis_status = dis_userdb.add_to_deactivated_db(user,inactive_role,reason)
+                user.role = inactive_role
                 db.session.commit()
-                return {'status': f'success! User deactivated with role {dis_role}'}
+                userdb_status = {'status': f'success! User deactivated with role {inactive_role}'}
         except SQLAlchemyError as e:
             db.session.rollback()
-            return {"status": "error","message" : str(e) }
-
+            userdb_status =  {"status": "error","message" : str(e) }
+        return {'userDB status' : userdb_status, 'inactiveDB status' : dis_status}
+    
+    def reactivate_user(self, id):
+        userdb_status = {"status": "error", "message": "User not found"}
+        dis_status = {"status": "error", "message": "not executed due to userdb error"}      
+        try:
+            user = self.get_user_from_id(id)
+            if user:
+                dis_user = dis_userdb.get_disabled_user_from_id(id)
+                user.role = dis_user.active_role     #type: ignore
+                db.session.commit()
+                userdb_status = {'status': f'success! User re-activated with role {user.role}'}
+                dis_status = dis_userdb.remove_from_deactivated_db(dis_user)
+        except SQLAlchemyError as e:
+            db.session.rollback()
+            userdb_status =  {"status": "error","message" : str(e) }
+        return {'userDB status' : userdb_status, 'inactiveDB status' : dis_status}
             
+        
             
     def get_all_users(self):
-        # session = self.get_session()
         # 1. Create the select statement
         stmt = select(User)
         # 2. Execute and return scalar results (the User objects)
@@ -146,26 +183,69 @@ class UserDatabase:
         user = db.session.scalar(stmt)
         return user
     
-    def get_user(self):
-        user_id = self.get_user_id()
-        if not user_id:
-            return None
-        return self.get_user_from_id(user_id)
-    
+    @property
+    def user(self):
+        user_id = getattr(self, 'user_id', None)
+        return self.get_user_from_id(user_id) if user_id else None    
         
-
-    
-    def get_column_names(self):
+    @property
+    def column_names(self):
         return User.__table__.columns # type: ignore
-        
+                
     def to_dict(self,obj):
         users = []
         for user in obj:
             users.append({c.key: getattr(user, c.key) for c in inspect(user).mapper.column_attrs})
         return users
-            
-            
+                   
     
 userdb = UserDatabase()
 
 
+''' Disabled Deactivated User Database methods '''
+class DisabledUserDB():
+    
+    @property
+    def table_exists(self):
+        inspector = inspect(db.engine)
+        return inspector.has_table('inactive_users')
+
+    
+    def add_to_deactivated_db(self,user,inactive_role,reason):
+        from flask_login import current_user
+        try:
+            disUser = InactiveUser()
+            disUser.id = user.id
+            disUser.username = user.username
+            disUser.active_role = user.role
+            disUser.inactive_role = inactive_role
+            disUser.staff_username = current_user.username
+            disUser.reason = reason
+            db.session.add(disUser)
+            db.session.commit()
+            return {'status': 'success', 'disUser_id': disUser.id}
+        except Exception as e:
+            db.session.rollback()
+            return {"status" : "failed to update disabled user db", "error" : str(e)}
+        
+    def remove_from_deactivated_db(self,dis_user_entry):
+        try:
+            print (f'removing from inactive_db: {dis_user_entry.username}')
+            db.session.delete(dis_user_entry)
+            db.session.commit()
+            return {"status": "success! Removed disabled entry for user", "User": dis_user_entry }
+        except SQLAlchemyError as e:
+            db.session.rollback()
+            return {"status": "error", "message" : str(e)}
+        
+    def get_disabled_user_from_id(self,user_id):
+        stmt = select(InactiveUser).where(InactiveUser.id == user_id)
+        user = db.session.scalar(stmt)
+        return user
+
+            
+        
+
+dis_userdb = DisabledUserDB()
+        
+        

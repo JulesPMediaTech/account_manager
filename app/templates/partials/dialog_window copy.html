@@ -1,0 +1,16 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dialog_window.css') }}">
+<dialog id="js-dialog-main" class="dialog-main">
+    <div class="dialog-header">
+        {{ title or "Dialog Header" }} 
+    </div>
+    <div class="dialog-content">
+        <div class="dialog-message-pane js-dialog-message-pane">
+            <p>Are you sure you want this dialog?</p>
+        </div>
+        <div class="dialog-buttons">
+            <button id="js-dialog-yes-button" class="dialog-yes-button">YES</button>
+            <form action="{{ request.referrer }}">
+                <input type="submit" class="dialog-cancel-button" value="CANCEL">
+        </div>
+    </div>
+</dialog>

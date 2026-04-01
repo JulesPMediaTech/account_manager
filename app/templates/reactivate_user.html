@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block head %}
+  <title>Account Manager</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/data_form.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="content">
+
+{% include 'partials/header.html' %}
+
+User: {{ user.username }}
+
+{% if user.role in roleGroup['inactive'] %}
+  <span id="js-trigger-dialog" data-dialog-message="Are you sure you want to re-activate {{ user.username }} ?"></span>
+{% endif %}
+
+<p> {{ status }} </p>
+
+  <div class="db-links">
+    <a href="{{ url_for('main.index') }}">Home</a>
+  </div>
+
+
+</div>
+
+
+
+{% endblock %}

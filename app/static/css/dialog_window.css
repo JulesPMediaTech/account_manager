@@ -1,0 +1,108 @@
+
+.dialog-main {
+    --bg-pane: #2b2b36;
+    --bg-window: #020231;
+    min-width: 400px;
+    background-color: var(--bg-window);
+    color: var(--text-color);
+    border-radius: 12px;
+    border-width: 5px;
+    box-sizing: border-box;
+}
+
+.dialog-main[open] {
+    animation: dialog-fade-in 280ms ease-out;
+}
+
+
+.dialog-main::backdrop {
+    backdrop-filter: blur(5px);
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.dialog-main[open]::backdrop {
+    animation: dialog-backdrop-fade-in 280ms ease-out;
+}
+
+@keyframes dialog-fade-in {
+    from {
+        opacity: 0;
+        transform: scale(0.96);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes dialog-backdrop-fade-in {
+    from {
+        background-color: rgba(0, 0, 0, 0);
+    }
+    to {
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .dialog-main[open],
+    .dialog-main[open]::backdrop {
+        animation: none;
+    }
+}
+
+.dialog-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* background-color: rgb(4, 4, 75); */
+    background-color: var(--bg-pane);
+    position:absolute;
+    height: 35px;
+    width: 100%;
+    top: 0;
+    left: 0;
+    font-size: 20px;
+    font-weight: 700;
+    
+}
+
+.dialog-content {
+    margin-top: 50px;
+}
+
+.dialog-message-pane {
+    background-color: var(--bg-pane);
+    padding: 20px;
+    border-radius: 12px;
+}
+
+.dialog-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.dialog-cancel-button {
+    /* position: relative;
+    right:0; transform: translateX(100%); */
+    height: 30px;
+    width: 200px;
+    border-radius: 10px;
+    background: linear-gradient(90deg, rgb(205, 0, 0),rgb(144, 1, 55));
+    margin-top: 20px;
+    color: rgb(245, 197, 197);
+    font-weight: 800;
+    font-size: 18px;
+} 
+.dialog-yes-button {
+    /* position: relative;
+    left:0; transform: translateX(0%); */
+    height: 30px;
+    width: 200px;
+    border-radius: 10px;
+    background: linear-gradient(90deg,rgb(0, 142, 0), rgb(0, 205, 41));
+    margin-top: 20px;
+    color: rgb(197, 245, 200);
+    font-weight: 800;
+    font-size: 18px;
+} 

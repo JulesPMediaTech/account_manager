@@ -28,6 +28,26 @@
       {% endfor %}
     {% endif %}
   {% endwith %}
+<button id="test-warning-button">Test WARNING</button>
+
+  <p><strong>Your IP:</strong> <span id="client-ip">Loading...</span></p>
+  <p><strong>Language:</strong> <span id="client-lang">Loading...</span></p>
+</div>
+
+<script>
+  fetch("{{ url_for('main.whoami') }}")
+    .then((r) => r.json())
+    .then((data) => {
+      document.getElementById("client-ip").textContent = data.client_ip || "Unknown";
+      document.getElementById("client-lang").textContent = data.accept_language || "Unknown";
+    })
+    .catch(() => {
+      document.getElementById("client-ip").textContent = "Unavailable";
+      document.getElementById("client-lang").textContent = "Unavailable";
+    });
+    
+</script>
+
 </div>
 
 {% endblock %}
