@@ -26,6 +26,9 @@
 }
 .show-table {
   background: linear-gradient(to bottom, #c8c556, #fdf869);
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-x: auto;
 }
 
 .form-wrapper {

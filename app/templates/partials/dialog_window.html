@@ -4,14 +4,14 @@
         {{ title or "Dialog Header" }} 
     </div>
     <div class="dialog-content">
-        {% if form and action_route %}
+        {% if dialog and action_route %}
             <form id="dialog-form" method="POST" action="{{url_for(action_route)}}">
-                {{ form.hidden_tag() }}
+                {{ dialog.hidden_tag() }}
                 <div class="dialog-message-pane js-dialog-message-pane">
-                    <p>{{ form.message or "Are you sure you want this dialog?"}}</p>
+                    <p>{{ dialog.message or "Are you sure you want this dialog?"}}</p>
                 </div>
                 <div class="dialog-buttons">
-                    {{ form.submit(class="dialog-yes-button js-dialog-yes-button") }}
+                    {{ dialog.submit(class="dialog-yes-button js-dialog-yes-button") }}
                     <button type="button" class="dialog-cancel-button js-dialog-cancel-button">CANCEL</button>
                 </div>
             </form>

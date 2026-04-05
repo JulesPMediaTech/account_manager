@@ -13,25 +13,42 @@
         type="font/ttf"
         crossorigin
     >
+    <link 
+        rel="preload"
+        href="{{url_for('static', filename='fonts/OpenSans-VariableFont_wdth,wght.ttf') }}"
+        as="font"
+        type="font/ttf"
+        crossorigin
+    >
 
 
     <title>Account Manager</title>
     <!-- <link rel="stylesheet" href="/static/css/main.css"> -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-   
-    <script type="module" src="{{ url_for('static', filename='components/burger-menu.js') }}"></script>
-    <script type="module" src="{{ url_for('static', filename='components/opaque-dialog.js') }}"></script>
-    <script type="module" src="{{ url_for('static', filename='components/login-widget.js') }}"></script>
-    <script type="module" src="{{ url_for('static', filename='components/accordion-menu.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/left_sidenav_drawer.css') }}">
+
     <script type="module" src="{{ url_for('static', filename='js/dialog_window.js') }}"></script>
+    <script type="module" src="{{ url_for('static', filename='js/left_sidenav_drawer.js') }}"></script>
 
 
     {% block head %}{% endblock %}
 </head>
 <body>
+    {% set include_header_footer = request.path not in ['/login'] %}    {# only templates not added to this array will be rendered with headers / footers #}
+    {% if include_header_footer %}
+        {% include 'partials/left_sidenav_drawer.html' %}
+        {% include 'partials/header.html' %}
+        {% include 'partials/footer.html' %}
+    {% endif %}
+
+    <div class="page-shell">
     {% block body %}{% endblock %}
     {% include 'partials/dialog_window.html' %}
     {% include 'partials/dialog_warning.html' %}
+    </div>
+
 
 </body>     
 </html>

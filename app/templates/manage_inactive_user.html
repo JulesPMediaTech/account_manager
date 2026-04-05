@@ -1,14 +1,11 @@
 {% extends "base.html" %}
 {% block head %}
   <title>Account Manager</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/data_form.css') }}">
 {% endblock %}
 
 {% block body %}
   <div class="content">
-
-    {% include 'partials/header.html' %}
 
     <p> User: {{ user.username }} </p>
     <p> Former Role: {{ disabled.active_role }} </p>
@@ -16,15 +13,24 @@
     <p> Deactivated on: {{ disabled.deactivated_on.strftime('%d/%m/%Y, %H:%M:%S') }}</p>
     <p> By: {{ disabled.staff_username }}</p>
     <p> Reason: {{ disabled.reason }}</p>
-    <form id="reactive-user-form" action="{{ url_for('main.reactivate_user') }}">
-      <button>Re-activate</button>
-    </form>
+
+      {# {% if user.role in roleGroup['inactive'] %} #}
+        {# <span data-dialog-message="Are you sure you want to re-activate {{ user.username }} ?"></span> #}
+        {# <span id="js-trigger-dialog" data-dialog-message="Are you sure you want to re-activate {{ user.username }} ?"></span> #}
+      {# {% endif %} #}
+
+    {% set allowed = current_user.role in roleGroup['senior'] %}
+    
+    {% if allowed %}
+      <button type="button" class="js-open-dialog-button"
+        data-dialog-message="Are you sure you want to re-activate {{ user.username }} ?"
+        >Re-activate
+      </button>
+    {% endif %}
+
     <button type="button" class="js-cancel-button"
       data-referrer="{{ url_for(cancel_url) }}">Back</button>
 
-    <div class="db-links">
-      <a href="{{ url_for('main.index') }}">Home</a>
-    </div>
 
   </div>
 

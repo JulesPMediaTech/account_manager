@@ -36,4 +36,7 @@ def logout():
     print('Logging Out....')
     return redirect(url_for('main.index'))
 
+@auth_bp.route('/signup', methods=['GET','POST'])
+def signup():
+    return render_template('signup.html',title='Sign Up')
 

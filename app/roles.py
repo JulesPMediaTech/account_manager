@@ -59,7 +59,9 @@ class Roles():
     
     @classmethod
     def roleHierarchy(cls):
-        return { key[0]:n for n,key in enumerate(cls.allUsers) }
+        _user_h = { key[0]:n for n,key in enumerate(cls.allUsers) }
+        _inac_h = { key[0]:len(_user_h) for key in cls.allInactive }
+        return _user_h | _inac_h # nb: | operator combines dicts
         
     @classmethod
     def compareSeniority(cls, u1=None, u2=None):

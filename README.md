@@ -46,33 +46,44 @@ app/routes/
 └── errors.py # custom error handlers (404, 500)
 
 ## TO DO LIST
+
 - [x] Password hashing
-- [x] Add ROLES to database: 
+- [x] Add ROLES to database:
+  - <b><u>ADMINISTRATIVE ROLES("The Staff")</b></u>
+  - - <b>Super / Owner (Level 1) </b><br>
+      <u>Capabilities:</u> Has catastrophic power. Can delete the database, manage billing/revenue settings, view sensitive financial data, and creating/deleting other Admins.
+      <u>Use Case:</u> This is me. There should usually be only one or two of these.
+  - - <b>Admin (Level 2)</b> <br>
+      <u>Capabilities:</u> Day-to-day management. Can ban users, refund payments, view user data for support, and manage content. Cannot access system-wide keys or delete the Owner.
 
-    - <b><u>ADMINISTRATIVE ROLES("The Staff")</b></u>
-    - - <b>Super / Owner (Level 1) </b><br>
-    <u>Capabilities:</u> Has catastrophic power. Can delete the database, manage billing/revenue settings, view sensitive financial data, and creating/deleting other Admins.
-    <u>Use Case:</u> This is me. There should usually be only one or two of these.
-    -  - <b>Admin (Level 2)</b> <br>
-    <u>Capabilities:</u> Day-to-day management. Can ban users, refund payments, view user data for support, and manage content. Cannot access system-wide keys or delete the Owner.       
-
-    - - <b>Mod & Support (Level 3)</b><br>
-    <u>Capabilities:</u> "Read-only" access to user profiles to help debug issues. Can reset passwords or mute detailed logs. Cannot delete data or authorize payments.
-    <u>Use Case:</u> Customer support staff you might hire later.
-    - -<b><u>USER MEMBERSHIP TIERS</b></u>
-    - - <b>Enterprise (Tier 2)</b>
-    - - <b>Pro (Tier 1)</b>
-    - - <b>Free (Tier 0)</b>
-    - - <b>Guest (no account)</b>
-
+  - - <b>Mod & Support (Level 3)</b><br>
+      <u>Capabilities:</u> "Read-only" access to user profiles to help debug issues. Can reset passwords or mute detailed logs. Cannot delete data or authorize payments.
+      <u>Use Case:</u> Customer support staff you might hire later.
+  - -<b><u>USER MEMBERSHIP TIERS</b></u>
+  - - <b>Enterprise (Tier 2)</b>
+  - - <b>Pro (Tier 1)</b>
+  - - <b>Free (Tier 0)</b>
+  - - <b>Guest (no account)</b>
 
 - [x] Login & Authentication
-- [ ] Role test by setting up demo pages
-- [ ] Github Actions
-- [ ] Implement sin-bin roles - disabled and banned with own DB of reasons
+- [x] Role test by setting up demo pages
+- [ ] Github Actions: CI - Tests, CD - Docker Hub
+- [x] Implement sin-bin roles - disabled and banned with own DB of reasons
 - [ ] Embellish ReadMe further:
-   
+- [ ] Auto emailer to users
+- [ ] Generate pasword button. Pw is then emailed to user
+- [ ] Prefs : User / Admin / System
+- [ ] Plug-in system for adding auth methods: 2FA / OAuth / PIN / Google / MS / SSO / Passkey
+- [x] GUI - side panel
+- [ ] Sign Up / create account
+- [x] GUI - Footer 
+- [ ] Rename .main to .admin ?
+- [ ] create role suspended - eg grace period for unpaid subs
+- [ ] hierarchical structure for sidenav - folders
+- [ ] Sign Up or login window when not logged in
+
 ### include:
+
 - What the app does
 - Architecture diagram (even ASCII is fine)
 - How to run locally

@@ -2,7 +2,7 @@
   display: flex;
   align-items: center; /* Vertically aligns the icon and text */
   gap: 25px; /* Adds some space between the icon and the text */
-  padding: 5px;
+  padding: 5px 5px 5px 0;
   position: fixed;
   background-color: black;
   top: 0;
@@ -10,6 +10,17 @@
   width: 100%;
   z-index: 100;
   box-sizing: border-box;  /* By default CSS calculates width as its CONTENT. This can be changed by setting box-sizing:border-box; property in the relevant selector. This way CSS width is content, padding, and border combined. */
+}
+
+.header-burger {
+  background-color: var(--sidenav-bgcol);
+  box-sizing: border-box;
+  width: var(--sidenav-width-closed);
+  min-width: var(--sidenav-width-closed);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .header-title {
@@ -26,6 +37,11 @@
   align-items: center;
   height: 50px;
   position: relative;
+}
+
+.header-left .sidenav-toggle {
+  margin: 0;
+  padding-left: 0;
 }
 
 /* .header-left {
@@ -54,7 +70,55 @@
     gap: 20px;
 }
 
-burger-menu {
-  background-color: rgb(37, 2, 70);
+.signin-link-container {
+  background-color: var(--sidenav-bgcol);
+  border-color: var(--text-color);
+  border-width: 3px;
+  border-style: solid;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: ease 0.2s ;
 }
 
+.signin-link-container > a {
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.signin-link-container > a:visited {
+  color: var(--text-color);
+}
+
+.signin-link-container:hover, .sign-in:hover {
+  transform: scale(1.1);
+  filter: drop-shadow(0px 0px 6px var(--text-color));
+}
+
+.tooltip-host {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.tooltip-host::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 30%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #fff;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  padding: 4px 8px;
+  border-radius: 4px;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 1000;
+  transition: opacity 0.15s ease;
+}
+
+.tooltip-host:hover::after {
+  opacity: 1;
+}

@@ -1,53 +1,44 @@
 {% extends "base.html" %} {% block head %}
 <title>Account Manager</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css',v=3) }}" >
-<link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='components/cube-loader.css') }}" />
 
 {% endblock %} 
 {% block body %}
-
-{% include 'partials/header.html' %}
-
-<div class="content">
-
-{% include 'partials/cube_loader.html' %}
-
-
-  <div class="db-links">
-    <a href="{{ url_for('main.add_user') }}">Add User</a>
-    <a href="{{ url_for('main.show_user_table') }}">Show Users</a>
-    <a href="{{ url_for('main.demo_admin_only') }}">Test Admin Access</a>
-    <a href="{{ url_for('main.demo_role_links') }}">Demo Role Links</a>
-    {# <a href="{{ url_for('main.edit_user') }}">Edit User Infomation</a> #}
-  </div>
-  {% with messages = get_flashed_messages() %}
-    {% if messages %}
-      {% for message in messages %}
-        <p>{{ message }}</p>
-      {% endfor %}
+  <div class="content">
+    {% if current_user.is_authenticated %}
+      <h1>Welcome, {{ current_user.first_name }}!</h1>
     {% endif %}
-  {% endwith %}
-<button id="test-warning-button">Test WARNING</button>
+    <p>refresh time: {{ now.strftime('%d/%m/%Y, %H:%M:%S') }}</p>
+    <p><strong>Your IP:</strong> <span id="client-ip">Loading...</span></p>
+    <p><strong>Language:</strong> <span id="client-lang">Loading...</span></p>
 
-  <p><strong>Your IP:</strong> <span id="client-ip">Loading...</span></p>
-  <p><strong>Language:</strong> <span id="client-lang">Loading...</span></p>
-</div>
+  {% include 'partials/cube_loader.html' %}
 
-<script>
-  fetch("{{ url_for('main.whoami') }}")
-    .then((r) => r.json())
-    .then((data) => {
-      document.getElementById("client-ip").textContent = data.client_ip || "Unknown";
-      document.getElementById("client-lang").textContent = data.accept_language || "Unknown";
-    })
-    .catch(() => {
-      document.getElementById("client-ip").textContent = "Unavailable";
-      document.getElementById("client-lang").textContent = "Unavailable";
-    });
-    
-</script>
 
-</div>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        {% for message in messages %}
+          <p>{{ message }}</p>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
 
+  </div>
+
+  <script>
+    fetch("{{ url_for('main.whoami') }}")
+      .then((r) => r.json())
+      .then((data) => {
+        document.getElementById("client-ip").textContent = data.client_ip || "Unknown";
+        document.getElementById("client-lang").textContent = data.accept_language || "Unknown";
+      })
+      .catch(() => {
+        document.getElementById("client-ip").textContent = "Unavailable";
+        document.getElementById("client-lang").textContent = "Unavailable";
+      });
+      
+  </script>
+  
+  </div>
 {% endblock %}

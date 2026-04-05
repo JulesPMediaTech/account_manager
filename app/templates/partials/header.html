@@ -5,11 +5,20 @@
     style="display: none;"></div>
 
   <div class="header-left">
-    <burger-menu>
-      <a href="/index">Home</a>
-      <a href="{{ url_for('main.add_user') }}">Add User</a>
-      <a href="{{ url_for('main.show_user_table') }}">Show Users</a>
-    </burger-menu>
+    <div class="header-burger">
+      <button
+        class="sidenav-toggle"
+        id="sidenav-toggle"
+        type="button"
+        aria-controls="left-sidenav-links"
+        aria-expanded="false"
+        aria-label="Open navigation menu"
+      >
+        <span class="bar bar1"></span>
+        <span class="bar bar2"></span>
+        <span class="bar bar3"></span>
+      </button>
+    </div>
     <div class="header-title">{{title}}</div>
   </div>
   <div class="header-central"></div>
@@ -17,16 +26,22 @@
     {% if current_user.is_authenticated %}
     {{ current_user.username }}
       <div class="user-manager">
-      <svg class="sign-in js-sign-in">
-        <use href="/static/images/sprite_sheet.svg#green-tick-circle" fill="green" stroke-width="4"></use>
-      </svg>
+      <span class="tooltip-host" data-tooltip="Account options">
+        <svg class="sign-in js-sign-in">
+          <use href="/static/images/sprite_sheet.svg#green-tick-circle" fill="green" stroke-width="4"></use>
+        </svg>
+      </span>
       {% include 'partials/user_manager_menu.html' %}
       </div>
     {% else %}
-    <a href="{{ url_for('auth.login') }}"> Sign In</a>
-    <svg class="sign-in js-sign-in" data-login-url="{{ url_for('auth.login') }}">
-      <use href="/static/images/sprite_sheet.svg#YT-sign-in"></use>
-    </svg>
+      <div class="signin-link-container">
+        <a href="{{ url_for('auth.signup') }}">SIGN UP</a>
+      </div>
+    <span class="tooltip-host" data-tooltip="Sign in">
+      <svg class="sign-in js-sign-in" data-login-url="{{ url_for('auth.login') }}">
+        <use href="/static/images/sprite_sheet.svg#YT-sign-in"></use>
+      </svg>
+    </span>
     {% endif %}
   </div>
   <script src="{{ url_for('static', filename='js/sign_in_icon.js') }}"></script>

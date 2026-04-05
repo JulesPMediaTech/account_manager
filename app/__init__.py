@@ -5,6 +5,8 @@ from .extensions import db as fdb, migrate, login_manager
 from . import models  # ensure models are imported
 from .routes.main import bp as main_bp
 from .routes.auth import auth_bp
+from datetime import datetime
+from .roles import Roles
 
 def create_app(test_config=None):
     app = Flask(__name__)
@@ -30,6 +32,12 @@ def create_app(test_config=None):
     # Blueprints
     app.register_blueprint(main_bp)
     app.register_blueprint(auth_bp)
+    
+    # Context Processor - injects variables to ALL templates
+    @app.context_processor
+    def global_template_variables():
+        return {'now' : datetime.now(),
+                'roleGroup' : Roles.roleGroups}
 
     print("Running Account Manager Server...")
     

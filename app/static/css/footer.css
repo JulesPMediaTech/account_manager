@@ -1,0 +1,27 @@
+.page-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    /* left: var(--sidenav-current-width, 0px); */
+    display: flex;
+    align-items: center; /* Vertically aligns the icon and text */
+    gap: 25px; /* Adds some space between the icon and the text */
+    padding: 5px;
+    background-color: black;
+    width: 100%;
+    /* width: calc(100% - var(--sidenav-current-width, 0px)); */
+    z-index: 100;
+    box-sizing: border-box;  /* By default CSS calculates width as its CONTENT. This can be changed by setting box-sizing:border-box; property in the relevant selector. This way CSS width is content, padding, and border combined. */
+    /* transition:
+      left 0.28s ease,
+      width 0.28s ease; */
+}
+
+.footer-left {
+    position: relative;
+    left: 20px;
+    display: flex;
+    gap: 25px;
+    align-items: center;
+    height: 50px;
+}

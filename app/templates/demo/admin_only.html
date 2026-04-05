@@ -5,16 +5,10 @@
 {% endblock %} 
 {% block body %}
 
-{% include 'partials/header.html' %}
-
 <div class="content">
 
 <h3>You can only see this page if you are ADMIN</h3>
 
-  <div class="db-links">
-    <a href="{{ url_for('main.index') }}">Home</a>
-    <a href="{{ url_for('main.show_user_table') }}">Show Users</a>
-  </div>
   {% with messages = get_flashed_messages() %}
     {% if messages %}
       {% for message in messages %}

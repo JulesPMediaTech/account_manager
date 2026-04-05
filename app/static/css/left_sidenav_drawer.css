@@ -1,0 +1,138 @@
+:root {
+  --sidenav-width-closed: 72px;
+  --sidenav-width-open: 288px;
+  --sidenav-link-height: 48px;
+  --sidenav-link-bgcol-hover: rgba(255, 255, 255, 0.11);
+  --header-height: 60px;
+  --footer-height: 60px;
+  --sidenav-bgcol: rgb(37, 2, 70);
+
+}
+
+body {
+  --sidenav-current-width: var(--sidenav-width-closed);
+}
+
+body.drawer-open {
+  --sidenav-current-width: var(--sidenav-width-open);
+}
+
+.left-sidenav {
+  position: fixed;
+  top: var(--header-height);
+  bottom: var(--footer-height);
+  left: 0;
+  width: var(--sidenav-current-width);
+  /* height: 100vh; */
+  background: var(--sidenav-bgcol);
+  border-right: 1px solid rgba(255, 255, 255, 0.14);
+  transition: width 0.28s ease;
+  z-index: 140;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+.sidenav-toggle {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-content: center;
+  gap: 6px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0 0 0 20px;
+}
+
+.sidenav-toggle:hover {
+  background-color: var(--sidenav-link-bgcol-hover);
+}
+
+
+.sidenav-toggle .bar {
+  width: 35px;
+  height: 5px;
+  background-color: var(--text-color, #ffffff);
+  transition: 0.4s;
+}
+
+.drawer-open .sidenav-toggle .bar1 {
+  transform: translate(0, 11px) rotate(-45deg);
+}
+
+.drawer-open .sidenav-toggle .bar2 {
+  opacity: 0;
+}
+
+.drawer-open .sidenav-toggle .bar3 {
+  transform: translate(0, -11px) rotate(45deg);
+}
+
+.sidenav-links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px 8px 16px;
+}
+
+.sidenav-link {
+  min-height: var(--sidenav-link-height);
+  border-radius: 8px;
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr);
+  column-gap: 20px;
+  align-items: center;
+  text-decoration: none;
+  color: var(--text-color);
+  padding: 10px 10px;
+  box-sizing: border-box;
+  white-space: nowrap;
+}
+
+.sidenav-link:hover {
+  background-color: var(--sidenav-link-bgcol-hover);
+}
+
+.sidenav-icon {
+  width: 40px;
+  height: 40px;
+  justify-self: center;
+  display: block;
+  color: var(--text-color);
+  stroke: currentColor;
+  fill: none;
+}
+
+.sidenav-label {
+  opacity: 0;
+  transform: translateX(-4px);
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+  overflow: hidden;
+}
+
+.drawer-open .sidenav-label {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.sidenav-link-placeholder {
+  opacity: 0.75;
+  cursor: default;
+}
+
+.sidenav-link-placeholder:hover {
+  background-color: transparent;
+}
+
+.page-shell {
+  margin-left: var(--sidenav-current-width);
+  transition: margin-left 0.28s ease;
+}
+
+@media (max-width: 900px) {
+  :root {
+    --sidenav-width-open: 240px;
+  }
+}

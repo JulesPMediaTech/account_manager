@@ -1,6 +1,9 @@
 const dialogWindow = document.getElementById("js-dialog-main");
 const dialogCancelButton = document.querySelector(".js-dialog-cancel-button");
 const triggerDialog = document.getElementById("js-trigger-dialog");
+const openDialogButton = document.querySelector(".js-open-dialog-button");
+
+
 
 if (dialogCancelButton) {
   dialogCancelButton.addEventListener("click", () => {
@@ -8,9 +11,20 @@ if (dialogCancelButton) {
   });
 }
 
+if (openDialogButton) {
+  openDialogButton.addEventListener("click", () => {
+    openDialog(openDialogButton);
+  });
+}
+
 if (triggerDialog) {
+  openDialog(triggerDialog);
+}
+
+function openDialog(trigger) {
   const dialogMessagePane = document.querySelector(".js-dialog-message-pane");
-  const dialogMessage = triggerDialog.dataset.dialogMessage;
+  console.log(dialogMessagePane);
+  const dialogMessage = trigger.dataset.dialogMessage;
   if (dialogMessage) {
     dialogMessagePane.innerHTML = `
       <p>${dialogMessage}</p>
@@ -18,6 +32,8 @@ if (triggerDialog) {
   }
   dialogWindow.showModal();
 }
+
+// DIALOG WARNING PANE
 
 const dlgWarning = document.getElementById("js-dlg-warning-main");
 const testWarningButton = document.getElementById("test-warning-button");
