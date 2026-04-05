@@ -48,12 +48,12 @@ def test_get_user_from_id_invalid(app, db, userdb):
     assert user is None
 
 def test_set_and_get_user_id(userdb):
-    userdb.set_user_id(42)
-    assert userdb.get_user_id() == 42
+    userdb.user_id = 42
+    assert userdb.user_id == 42
 
 def test_get_user_id_before_set_returns_none():
     fresh = UserDatabase()
-    assert fresh.get_user_id() is None
+    assert fresh.user_id is None
 
 def test_update_user_changes_field(app, db, test_user, userdb):
     with app.app_context():

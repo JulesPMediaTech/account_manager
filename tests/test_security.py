@@ -13,7 +13,7 @@ def test_open_redirect_not_allowed_after_login(client, test_user):
     """next= param should not redirect to external URLs."""
     response = client.post(
         '/login?next=http://evil.com',
-        data={'username': 'testuser', 'password': 'password123'},
+        data={'username': test_user.username, 'password': 'password123'},
         follow_redirects=False
     )
     location = response.headers.get('Location', '')
