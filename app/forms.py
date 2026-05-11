@@ -1,12 +1,12 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, EmailField, SelectField, SubmitField, BooleanField, HiddenField
+from wtforms import StringField, PasswordField, EmailField, SelectField, SubmitField, BooleanField, HiddenField, DateField
 from wtforms.validators import DataRequired, Length, Regexp, InputRequired, EqualTo
 from .roles import Roles as roles
 
 class UserForm(FlaskForm):
     validatorsEnabled = False
 
-    username = StringField('Username or email', validators=[
+    username = StringField('Username', validators=[
         InputRequired(message="Field cannot be empty"),
         Length(min=5, max=40, message="Must be between 5 and 40 characters")
     ] if validatorsEnabled else [])
@@ -47,6 +47,10 @@ class UserForm(FlaskForm):
         super().process(formdata=formdata, obj=obj, data=data, **kwargs)
         if self.email.data and not self.email.data.strip():
             self.email.data = None
+            
+class UserCreateForm(UserForm):
+    dateOfBirth = DateField('Date of Birth',format='%d/%m/%Y')
+
             
 class DeactivateUserForm(FlaskForm):
     role = SelectField('Role', choices=roles.allInactive, default='disabled', validators=[DataRequired('choose type')])

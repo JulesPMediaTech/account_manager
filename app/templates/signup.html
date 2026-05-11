@@ -18,6 +18,61 @@
 
   <div class="content">
     <h1>Sign Up Page</h1>
+    {{ form.hidden_tag() }}
+          <div class="login-pane">
+      <div class="login-form-wrapper">
+        <form id="login-form" method="POST" action="{{ url_for('auth.login') }}">
+          {{ form.hidden_tag() }}
+
+          <div class="label-input-pair">
+            {{ form.username.label }}
+            {{ form.username(placeholder="Username") }}
+          </div> <br>
+          {% for error in form.username.errors %} <span class="err">[{{ error }}]</span> {% endfor %}
+
+          <div class="label-input-pair">
+            {{ form.firstName.label }}
+            {{ form.firstName(placeholder="First Name") }}
+          </div> <br>
+          {% for error in form.firstName.errors %} <span class="err">[{{ error }}]</span> {% endfor %}
+
+          <div class="label-input-pair">
+            {{ form.lastName.label }}
+            {{ form.lastName(placeholder="Last Name") }}
+          </div> <br>
+          {% for error in form.lastName.errors %} <span class="err">[{{ error }}]</span> {% endfor %}
+
+          <div class="label-input-pair">
+            {{ form.email.label }}
+            {{ form.email(placeholder="Email") }}
+          </div> <br>
+          {% for error in form.email.errors %} <span class="err">[{{ error }}]</span> {% endfor %}
+
+          <div class="label-input-pair">
+            {{ form.dateOfBirth.label }}
+            {{ form.dateOfBirth(placeholder="Date of Birth") }}
+          </div> <br>
+          {% for error in form.dateOfBirth.errors %} <span class="err">[{{ error }}]</span> {% endfor %}
+
+
+          <div class="label-input-pair">
+            {{ form.password.label }}
+            {{ form.password(placeholder="Password") }}
+          </div> <br>
+          {% for error in form.password.errors %} <span class="err">[{{ error }}]</span> {% endfor %}
+
+          <div class="label-checkboxes">
+            <div id="show-password-group">
+              <label for="show-password">Show Password</label>
+              <input type="checkbox" class="show-password" id="js-show-password-checkbox">
+            </div>
+          </div> <br>
+
+          {{ form.submit(class="login-button") }}
+        </form>
+      </div>
+    </div>
+
 
   </div>
 

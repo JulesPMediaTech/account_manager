@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: account-manager-app
+  namespace: dev
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: account-manager-app
+
+  template:
+    metadata:
+      labels:
+        app: account-manager-app
+
+    spec:
+      # automountServiceAccountToken: false
+      containers:
+      - name: account-manager-app
+        image: golively/account_manager_flask:latest
+
+        ports:
+        - containerPort: 8000
+        
+        volumeMounts:
+        - name: app-secrets
+          mountPath: /run/secrets
+          readOnly: true
+
+      volumes:
+      - name: app-secrets
+        projected:
+          sources:
+
+          - secret:
+              name: accmanager-secret-key
+
+          - secret:
+              name: accmanager-db-password
