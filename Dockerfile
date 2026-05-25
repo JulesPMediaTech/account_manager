@@ -3,7 +3,7 @@ FROM python:3.12-slim
 
 # 1. DO THIS FIRST: Run system-level commands as root to maximize caching
 # Create the mount point immediately (system setup)
-RUN mkdir -p /var/run/secrets/kubernetes.io/serviceaccount
+# RUN mkdir -p /var/run/secrets/kubernetes.io/serviceaccount
 
 # Set the working directory in the container
 WORKDIR /app

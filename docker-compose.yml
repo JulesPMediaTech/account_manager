@@ -15,8 +15,10 @@ services:
 
       # - DATABASE_URL=postgresql://accmanager:${POSTGRES_PASSWORD}@postgres:5432/accmanager_db # Example of passing DB password via env var. Not needed as it's read from secrets in server.py
     secrets:
-      - secret_key
-      - db_password
+      - source: secret_key
+        target: /app/secrets/secret_key
+      - source: db_password
+        target: /app/secrets/db_password
     depends_on:
       postgres:
         condition: service_healthy

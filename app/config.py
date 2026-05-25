@@ -12,8 +12,8 @@ def read_secret(env_var, file_path):
     return secret
 
 class Config:
-    SECRET_KEY = read_secret("SECRET_KEY", "/run/secrets/secret_key")
-    DB_PASSWORD = read_secret("DB_PASSWORD", "/run/secrets/db_password")
+    SECRET_KEY = read_secret("SECRET_KEY", "/app/secrets/secret_key")
+    DB_PASSWORD = read_secret("DB_PASSWORD", "/app/secrets/db_password")
     DATABASE_URL = f"postgresql://accmanager:{DB_PASSWORD}@postgres:5432/accmanager_db"
     SQLALCHEMY_DATABASE_URI = f"postgresql://accmanager:{DB_PASSWORD}@postgres:5432/accmanager_db"
     SQLALCHEMY_TRACK_MODIFICATIONS = False

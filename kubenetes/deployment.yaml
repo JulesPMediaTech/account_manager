@@ -26,8 +26,10 @@ spec:
         
         volumeMounts:
         - name: app-secrets
-          mountPath: /run/secrets
+          mountPath: /app/secrets
           readOnly: true
+        - name: tmp-volume
+          mountPath: /tmp   # Gives Python/Flask a place to write temp data
 
       volumes:
       - name: app-secrets
@@ -39,3 +41,5 @@ spec:
 
           - secret:
               name: accmanager-db-password
+      - name: tmp-volume
+        emptyDir: {}        # This is a writable in-memory folder
